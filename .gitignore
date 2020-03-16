@@ -22,3 +22,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# 12factor.net environment
+env-config.js
+/public/env-config.js
