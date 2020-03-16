@@ -166,7 +166,7 @@ const App = () => {
           </div>
           <div className="host">
             Hosted by<br/>
-            <img src={uffizziLogo} style={{width: '100px'}} alt="" />
+            <a target="_blank" href="https://www.uffizzi.cloud/"><img src={uffizziLogo} style={{ width: '100px' }} alt="" /></a>
           </div>
         </footer>
       </div>

@@ -640,7 +640,7 @@ const InternshipExperience = () => (
     </Form.Item> */}
     <Form.Item
       name="work_rating"
-      label="Rate the company work (1 = boring and useless, 5 = fascinating and engaging)" rules={[
+      label="Rate the work you did (1 = boring and useless, 5 = fascinating and engaging)" rules={[
         {
           required: true,
           message: "Please rate your company's work",
