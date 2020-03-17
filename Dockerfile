@@ -35,7 +35,7 @@ EXPOSE 80
 # Prepare environment.
 WORKDIR /usr/share/nginx/html
 COPY ./reactenv.bash .
-COPY .env .
+COPY default.env ./.env
 RUN chmod +x reactenv.bash
 
 # Parse environment variables and start webserver.
