@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Environment Variables
+
+Before you `yarn start`, you'll want a `.env` file. You can copy `default.env` to `.env`.  Then you may edit that file to add things like Firebase configuration, but be careful never to commit any secrets to the repository nor build them within Docker images (see `.gitignore` and `.dockerignore`.)
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -45,16 +49,16 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 # Production Packaging
 
-To package this application for production, build a Docker image.
+To package this application for production, build a Docker image. This process prepares the app to be served as static files by `nginx`, a very performant HTTP server.
 
 ```
 docker build . --tag=spettway/canary
 ```
 
-You can briefly test this on your workstation before publishing.
+You can briefly test this on your workstation before publishing. Include environment variables.
 
 ```
-docker run -p 3000:3000 spettway/canary
+docker run -p 8080:80 --env-file=.env spettway/canary
 ```
 
 If that looks good, you can push the image up to a registry. You may need to set up an account on that registry and configure your Docker environment, especially if that registry is Docker Hub.
