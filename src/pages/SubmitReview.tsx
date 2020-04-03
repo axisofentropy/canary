@@ -3,7 +3,7 @@ import './SubmitReview.css';
 
 import { useCookies } from 'react-cookie';
 import { RouteComponentProps, navigate } from "@reach/router"
-import { Input, Form, Button, Select, Radio, Tooltip, Rate, Steps, Checkbox, } from 'antd/es';
+import { Input, Form, Button, Select, Radio, Tooltip, Rate, Steps, Checkbox, InputNumber  } from 'antd/es';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { YearValue } from '../reviews';
 import { database } from '../database'
@@ -111,6 +111,9 @@ const DynamicRule = () => {
       work_time: values.work_time,
       interview_advice: values.interview_advice || '',
       optional_remarks: values.optional_remarks || '',
+      rounds: values.rounds || '',
+      formats: values.formats || [],
+      interview_types: values.interview_types || [],
       is_visible: false,
     }
     // console.log(review);
@@ -177,11 +180,80 @@ const DynamicRule = () => {
           hasHousingStipend={hasHousingStipend}
           setHasHousingStipend={setHasHousingStipend} />}/>
         <Steps.Step status="wait" title="Internship experience" description={<InternshipExperience />} />
+        <Steps.Step status="wait" title="Interview process" description={<InterviewProcess/>} />
         <Steps.Step status="wait" title="Submit" description={<Submit onSubmit={onSuccess}/>} />
       </Steps>
     </Form>
   );
 };
+
+const InterviewProcess = () => (
+  <div className="interview-process">
+    <Form.Item
+      name='rounds'
+      label="Rounds"
+      rules={[
+        {
+          required: true,
+          message: "Please select an option",
+        },
+      ]}>
+      <Radio.Group>
+        <Radio value={'1'}>
+          1
+        </Radio>
+        <Radio value={'2'}>
+          2
+        </Radio>
+        <Radio value={'3'}>
+          3
+        </Radio>
+        <Radio value={"4+"}>
+          4+
+        </Radio>
+      </Radio.Group>
+    </Form.Item>
+    <Form.Item
+      name='formats'
+      label="Format(s)"
+      extra="Choose all that apply"
+      rules={[
+        {
+          required: true,
+          message: "Please select an option",
+        },
+      ]}>
+      <Checkbox.Group options={[
+        { label: 'In-person', value: 'in_person' },
+        { label: 'Remote (video conference, phone call, etc.)', value: 'remote' },
+        { label: 'Recorded video', value: 'recorded' },
+        { label: 'Online test (e.g. HireVue, HackerRank)', value: 'online_test' },
+      ]} />
+    </Form.Item>
+    <Form.Item
+      name='interview_types'
+      label="Interview type"
+      extra="Choose all that apply"
+      rules={[
+        {
+          required: true,
+          message: "Please select an option",
+        },
+      ]}>
+      <Checkbox.Group options={[
+        { label: 'Behavioral', value: 'behavioral' },
+        { label: 'Technical', value: 'technical' },
+        { label: 'Case', value: 'case' },
+        { label: 'Past Experience', value: 'past_experience' },
+      ]} />
+    </Form.Item>
+    <Form.Item
+      name="interview_advice"
+      label="Any other advice on the application/interview process?">
+      <Input.TextArea rows={2}></Input.TextArea>
+    </Form.Item>
+  </div>
+)
 
 
 const AboutYou = () => (
@@ -703,11 +775,6 @@ const InternshipExperience = () => (
         }
       ]}>
       <Input />
-    </Form.Item>
-    <Form.Item
-      name="interview_advice"
-      label="Any advice on the application/interview process?">
-      <Input.TextArea rows={2}></Input.TextArea>
     </Form.Item>
     <Form.Item
       name="optional_remarks"

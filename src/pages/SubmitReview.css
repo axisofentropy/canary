@@ -86,3 +86,8 @@
 .SubmitReview .ant-rate {
   color: #ffb300 !important;
 }
+
+.SubmitReview .ant-checkbox-group-item.ant-checkbox-wrapper {
+  display: block;
+  margin-bottom: 4px;
+}
