@@ -103,7 +103,7 @@ const Home = (props: HomeProps) => {
       if (search) {
         //@ts-ignore
         const fuse = new Fuse(reviews_data, {
-          threshold: 0.1,
+          threshold: 0.3,
           useExtendedSearch: true,
           keys: [
             'tools.often', 'tools.occasionally', 'tools.rarely',
@@ -118,7 +118,7 @@ const Home = (props: HomeProps) => {
         //@ts-ignore
         reviews_data = fuse.search(search).map(entry => entry.item)
       }
-      reviews_data = filterReviews(reviews_data, keys)
+      reviews_data = filterReviews(reviews_data, keys, {threshold: 0.3})
       if (key && key !== 'relevance') {
         reviews_data.sort(sortFunctions[key])
       }
