@@ -103,7 +103,7 @@ const Home = (props: HomeProps) => {
       if (search) {
         //@ts-ignore
         const fuse = new Fuse(reviews_data, {
-          threshold: 0.5,
+          threshold: 0.1,
           useExtendedSearch: true,
           keys: [
             'tools.often', 'tools.occasionally', 'tools.rarely',
