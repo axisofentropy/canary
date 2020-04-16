@@ -32,7 +32,7 @@
   },
   "scripts": {
     "start": "./reactenv.bash && cp env-config.js ./public/ && react-app-rewired start",
-    "dev": "react-app-rewired start",
+    "dev": "node ./reactenv.js && react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
