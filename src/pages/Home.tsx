@@ -1,40 +1,74 @@
 import React, { useState, useEffect } from 'react';
+import { RouteComponentProps, navigate, useLocation } from "@reach/router"
 import './Home.css';
+
+import { Button, Checkbox, Input, Pagination, Spin, Result, Form, Select } from 'antd'
+import { CheckboxValueType } from 'antd/es/checkbox/Group'
+import { FilterOutlined, CloseOutlined, ArrowDownOutlined } from '@ant-design/icons'
 
 import CompanyCard from '../components/CompanyCard'
 
-import { Button, Checkbox, Input, Pagination, Spin, Result } from 'antd'
-
-import { RouteComponentProps, navigate, useLocation } from "@reach/router"
 import { Review } from '../reviews'
-
-import { CheckboxValueType } from 'antd/es/checkbox/Group'
 import { database } from '../database'
 
+import classNames from 'classnames'
 import Fuse from "fuse.js";
+import flow from 'lodash/flow'
 
 // let test_rev = test_data[1]
 // database.collection('review').doc(test_rev.id).set(test_rev)
 
-const keyMap:{[key: string]: string} = {
+const keyMap: { [key: string]: string } = {
   'Position': "position",
   'Company': "company.name",
   'Description': "description",
+}
+
+const sortFunctions = {
+  date: (a, b) => b.timestamp.seconds - a.timestamp.seconds,
+  'rating-overall': (a, b) => b.overall_rating - a.overall_rating,
+  'rating-work': (a, b) => b.work_rating - a.work_rating,
+  'rating-culture': (a, b) => b.culture_rating - a.culture_rating,
+}
+
+
+const filterReviews = (reviews, keys, globalOptions = {}) => {
+  let keyList = Object.keys(keys);
+  if (keyList.length === 0)
+    return reviews;
+  let functions = Object.keys(keys).map(key => {
+    return list => {
+      let searchKeys = [key]
+      if (key === 'tools') {
+        searchKeys = ['tools.often', 'tools.occasionally', 'tools.rarely']
+      } else if (key === 'company') {
+        searchKeys = ['company.name']
+      } else if (key === 'school') {
+        searchKeys = ['school.name']
+      }
+      let fuse = new Fuse(list, { ...globalOptions, keys: searchKeys })
+      //@ts-ignore
+      return fuse.search(keys[key]).map(entry => entry.item)
+    }
+  })
+
+  return flow(functions)(reviews)
 }
 
 interface HomeProps extends RouteComponentProps { children?: any }
 const Home = (props: HomeProps) => {
   const searchOptions = ['Position', 'Company', 'Description'];
   const location = useLocation();
-  const [searchState, setSearchState] = useState<{ indeterminate: boolean, checkAll: boolean, checkedList: CheckboxValueType[]}>({
+  const [searchState, setSearchState] = useState<{ indeterminate: boolean, checkAll: boolean, checkedList: CheckboxValueType[] }>({
     indeterminate: false,
     checkedList: ['Position', 'Company', 'Description'],
     checkAll: true,
   })
   const [reviews, setReviews] = useState<Review[] | undefined>(undefined);
   const [searchText, setSearchText] = useState<string>('')
+  const [showFilter, setShowFilter] = useState<boolean>(false);
   var urlParams = new URLSearchParams(props.location?.search);
-  
+
 
   useEffect(() => {
     // getReviews(props.location?.search);
@@ -43,43 +77,97 @@ const Home = (props: HomeProps) => {
     // });
     setSearchText(urlParams.get('text') || '')
     getReviews(location.search);
+
   }, [location]);
 
   function getReviews(search) {
     urlParams = new URLSearchParams(search)
     // console.log(Array.from(urlParams.entries()));
-    
+
     database.collection('review').where('is_visible', '==', true).get().then(data => {
       let reviews_data = data.docs.map(d => d.data())
-      if (urlParams.has('text') && urlParams.get('text') !== '') {
-        let keys:string[]|undefined = ["position", "company.name", "description"]
-        if (urlParams.has('in')) {
-          keys = urlParams.get('in')?.split(',').reduce((acc, cur) => [...acc, keyMap[cur]], [] as string[])
-        }
-        var options = {
-          shouldSort: true,
-          threshold: 0.45,
-          location: 0,
-          distance: 100,
-          maxPatternLength: 100,
-          minMatchCharLength: 1,
-          keys
-        };
-        // console.log(reviews);
-        var fuse = new Fuse(reviews_data, options);
-        setPage(1);
-        setReviews(fuse.search(urlParams.get('text') || '') as Review[])
-      } else {
-        reviews_data.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
-        setReviews([...reviews_data] as Review[])
+
+      let params = new URLSearchParams(props.location?.search)
+
+      let keys: { search?: string, sort?: string, key?: string } = {}
+      //@ts-ignore
+      for (let entry of params.entries()) { // each 'entry' is a [key, value] tupple
+        const [key, value] = entry;
+        keys[key] = value;
       }
+      let { search, sort, key } = keys
+      delete keys.search
+      delete keys.sort
+      delete keys.key
+
+      if (search) {
+        //@ts-ignore
+        const fuse = new Fuse(reviews_data, {
+          threshold: 0.5,
+          useExtendedSearch: true,
+          keys: [
+            'tools.often', 'tools.occasionally', 'tools.rarely',
+            'company.name',
+            'position',
+            'description',
+            'team',
+            'school.name',
+            'major'
+          ]
+        })
+        //@ts-ignore
+        reviews_data = fuse.search(search).map(entry => entry.item)
+      }
+      reviews_data = filterReviews(reviews_data, keys)
+      if (key && key !== 'relevance') {
+        reviews_data.sort(sortFunctions[key])
+      }
+      if (sort === 'ascending') {
+        reviews_data = reviews_data.reverse()
+      }
+      setReviews(reviews_data as Review[])
     }).catch(err => {
       // console.log(err);
     })
   }
 
   const [page, setPage] = useState<number>(1)
+  const [form] = Form.useForm();
   const [reviewsPerPage, setReviewsPerPage] = useState<number>(10)
+
+  const initialValues = {
+    key: urlParams.get('key') || 'relevance',
+    search: urlParams.get('search') || '',
+    tools: urlParams.get('tools')?.split(',') || [],
+    company: urlParams.get('company')?.split(',') || [],
+    position: urlParams.get('position')?.split(',') || [],
+    major: urlParams.get('major')?.split(',') || [],
+    school: urlParams.get('school')?.split(',') || [],
+    // posted_from: urlParams.get('posted_from') ? moment().year(urlParams.get('posted_from')) : null,
+    // posted_to: urlParams.get('posted_to') ? moment().year(urlParams.get('posted_to')) : null,
+  }
+
+  function onFormChange(changed, all) {
+    if ('search' in changed && Object.keys(changed).length === 1) {
+      return;
+    }
+    for (const [key, value] of Object.entries(changed)) {
+      if (!value || (value as Array<string>).length === 0) {
+        urlParams.delete(key)
+      } else {
+        urlParams.set(key, value as string)
+      }
+    }
+    navigate('/?' + urlParams.toString())
+  }
+
+  function handleSearch(value) {
+    if (value)
+      urlParams.set('search', value)
+    else
+      urlParams.delete('search')
+    navigate('/?' + urlParams.toString())
+  }
 
   return (
     <div className="Home">
@@ -91,83 +179,190 @@ const Home = (props: HomeProps) => {
           </div>
         </div>
         {/* <p className="jumbotron__subtitle">Read reviews from other students about their internship and co-op experiences, so you can find an experience you'll love.</p> */}
-        
-      </div>
-      {/* <div className="write-review">
-        Empower your fellow students:
-        <br/>
-        <Button type="primary">Write a Review</Button>
-      </div> */}
 
-      <div className="search">
-        <Input.Search 
-          placeholder="Search reviews"
-          value={searchText}
-          onChange={e => setSearchText(e.target.value)}
-          onSearch={value => navigate(`?text=${escape(value)}` + (searchState.indeterminate == false ? '' : `&in=${searchState.checkedList.join(',')}`))}
-        />
-        <div className="search__options">
-          Search in:&ensp;
-          <Checkbox
-              style={{ marginRight: '8px' }}
-              indeterminate={searchState.indeterminate}
-              checked={searchState.checkAll}
-              onChange={e => setSearchState({
-                checkedList: e.target.checked ? searchOptions : [],
-                indeterminate: false,
-                checkAll: e.target.checked,
-              })}>
-              Everything
-          </Checkbox>
-          <Checkbox.Group
-            options={searchOptions}
-            value={searchState.checkedList}
-            onChange={checkedList => setSearchState({
-              checkedList,
-              indeterminate: !!checkedList.length && checkedList.length < searchOptions.length,
-              checkAll: checkedList.length === searchOptions.length,
-            })}
+      </div>
+      <div className={classNames("drawer-shade", { visible: showFilter })} onClick={() => setShowFilter(false)}></div>
+
+
+
+      <Form layout="vertical" form={form} onValuesChange={onFormChange} initialValues={initialValues}>
+        <div className="search">
+          <Form.Item name="search" noStyle>
+            <Input.Search
+              placeholder="Search reviews"
+              value={searchText}
+              allowClear
+              onChange={e => setSearchText(e.target.value)}
+              onSearch={handleSearch}
+            />
+          </Form.Item>
+          <Button
+            type="primary"
+            className="filter-toggle"
+            style={{ border: 'none', marginLeft: '5px', height: '100%', marginRight: 'auto', borderRadius: '5px' }}
+            onClick={() => setShowFilter(true)}>
+            <FilterOutlined />
+          </Button>
+        </div>
+        <div className="search-content">
+          <Filter
+            onClose={() => setShowFilter(false)}
+            visible={showFilter}
           />
-        </div>
-      </div>
-      <div className="reviews-container">
-        <Pagination
-          // showSizeChanger
-          current={page}
-          total={reviews?.length}
-          hideOnSinglePage
-          onChange={(page, pageSize) => setPage(page)}
-          // showTotal={total => `Total ${total} items`}
-          pageSize={reviewsPerPage}
-          onShowSizeChange={(cur, pageSize) => setReviewsPerPage(pageSize)}
-        />
-        <div className="reviews">
-          {reviews ? 
-            (reviews.length > 0 ?
-              reviews.slice((page - 1) * 10, page * 10).map((review, i) => <CompanyCard key={i} name={review.company.name} image={review.company.image} description={review.company.description} reviews={[review]} />)
-              :
-              <Result
-                status="warning"
-                title="Search returned 0 results"
-                style={{gridColumn: '1 / 3'}}
+          <div className="reviews-container">
+            <div className="reviews-header">
+              <Pagination
+                // showSizeChanger
+                current={page}
+                total={reviews?.length}
+                hideOnSinglePage
+                onChange={(page, pageSize) => setPage(page)}
+                // showTotal={total => `Total ${total} items`}
+                pageSize={reviewsPerPage}
+                onShowSizeChange={(cur, pageSize) => setReviewsPerPage(pageSize)}
               />
-            ) :
-            <Spin size="large" />
-          }
+              <div className="sort-input">
+                <Form.Item name={'sort'} noStyle>
+                  <SortInput />
+                </Form.Item>
+                <Form.Item name={'key'} noStyle>
+                  <Select style={{ width: 140 }} bordered={false}>
+                    <Select.Option value="relevance">Relevance</Select.Option>
+                    <Select.Option value="date">Date</Select.Option>
+                    <Select.Option value="rating-overall">Overall Rating</Select.Option>
+                    <Select.Option value="rating-work">Work Rating</Select.Option>
+                    <Select.Option value="rating-culture">Culture Rating</Select.Option>
+                  </Select>
+                </Form.Item>
+              </div>
+            </div>
+            <div className="reviews">
+              {reviews ?
+                (reviews.length > 0 ?
+                  reviews.slice((page - 1) * 10, page * 10).map((review, i) => <CompanyCard key={i} name={review.company.name} image={review.company.image} description={review.company.description} reviews={[review]} />)
+                  :
+                  <Result
+                    status="warning"
+                    title="Search returned 0 results"
+                    style={{ gridColumn: '1 / 3' }}
+                  />
+                ) :
+                <Spin size="large" />
+              }
+            </div>
+            <Pagination
+              // showSizeChanger
+              current={page}
+              total={reviews?.length}
+              hideOnSinglePage
+              onChange={(page, pageSize) => setPage(page)}
+              // showTotal={total => `Total ${total} items`}
+              pageSize={reviewsPerPage}
+              onShowSizeChange={(cur, pageSize) => setReviewsPerPage(pageSize)}
+            />
+          </div>
         </div>
-        <Pagination
-          // showSizeChanger
-          current={page}
-          total={reviews?.length}
-          hideOnSinglePage
-          onChange={(page, pageSize) => setPage(page)}
-          // showTotal={total => `Total ${total} items`}
-          pageSize={reviewsPerPage}
-          onShowSizeChange={(cur, pageSize) => setReviewsPerPage(pageSize)}
-        />
-      </div>
+      </Form>
     </div>
   );
 }
 
 export default Home;
+
+
+const Filter = ({ onClose, visible }) => {
+
+  return (
+    <div className={classNames("filter", { visible })}>
+      <div className="filter-toggle filter-close" onClick={onClose}><CloseOutlined /></div>
+      <h2><FilterOutlined /> Filter</h2>
+      <Form.Item name="company" label="Companies">
+        <Select
+          notFoundContent=''
+          allowClear
+          mode="tags"
+          placeholder="Companies"
+          optionFilterProp="children"
+          // filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+          showSearch>
+        </Select>
+      </Form.Item>
+      <Form.Item name="position" label="Positions">
+        <Select
+          notFoundContent=''
+          allowClear
+          mode="tags"
+          placeholder="Positions" />
+      </Form.Item>
+      <Form.Item name="tools" label="Tools">
+        <Select
+          notFoundContent=''
+          allowClear
+          mode="tags"
+          placeholder="Tools">
+        </Select>
+      </Form.Item>
+      {/* <div className="date-range">
+        <Form.Item name="posted_from" label="Posted">
+          <DatePicker picker="year" placeholder="from" />
+        </Form.Item>
+        <Form.Item name="posted_to" label={<div></div>}>
+          <DatePicker picker="year" placeholder="to" />
+        </Form.Item>
+      </div> */}
+      <h3>Intern profile</h3>
+      <Form.Item name="major" label="Majors">
+        <Select
+          notFoundContent=''
+          allowClear
+          mode="tags"
+          placeholder="Majors"
+          optionFilterProp="children"
+          // filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+          showSearch>
+        </Select>
+      </Form.Item>
+      <Form.Item name="school" label="Schools">
+        <Select
+          notFoundContent=''
+          allowClear
+          mode="tags"
+          placeholder="Schools"
+          optionFilterProp="children"
+          // filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+          showSearch>
+        </Select>
+      </Form.Item>
+    </div>
+  )
+}
+
+interface SortInput {
+  value?: 'ascending' | 'descending';
+  onChange?: (value: 'ascending' | 'descending') => void;
+}
+
+const SortInput: React.FC<SortInput> = ({ value = 'descending', onChange }) => {
+  const triggerChange = changedValue => {
+    if (onChange) {
+      onChange(changedValue);
+    }
+  };
+
+  const onClick = () => {
+    let newVal = value === 'ascending' ? 'descending' : 'ascending'
+    triggerChange(newVal);
+  };
+
+  return (
+    <div className="sort">
+      <Button
+        className={"sort-direction " + value}
+        shape="circle"
+        style={{ border: 'none', background: 'none', padding: '0', boxShadow: 'none' }}
+        onClick={onClick}>
+        <ArrowDownOutlined />
+      </Button>
+    </div>
+  )
+}

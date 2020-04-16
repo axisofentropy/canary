@@ -1,7 +1,9 @@
 
 .reviews-container {
   max-width: 1500px;
-  margin: 0 auto 100px auto;
+  margin: 0 auto 100px 3%;
+  grid-area: reviews;
+  width: 90%;
 }
 
 .reviews {
@@ -13,12 +15,14 @@
 }
 
 .reviews-container .ant-pagination {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .search {
   max-width: 500px;
   margin: 30px auto;
+  display: flex;
+  height: 44px;
 }
 
 .search .ant-input-search {
@@ -82,9 +86,12 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1450px) {
   .reviews {
     grid-template-columns: 1fr;
+  }
+  .reviews-container {
+    max-width: 900px;
   }
 }
 
@@ -105,4 +112,110 @@
 
 .search__options {
   padding: 2px 6px;
+}
+
+
+
+.filter {
+  grid-area: filter;
+  width: 300px;
+  min-height: 400px;
+  padding: 20px;
+}
+
+.filter .ant-form-item {
+  margin-bottom: 10px;
+}
+.filter .ant-form-item-label {
+  padding: 0;
+}
+.filter .date-range {
+  display: flex;
+}
+
+.filter-toggle {
+  opacity: 0;
+  pointer-events: none;
+}
+.drawer-shade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.1);
+  z-index: 99;
+  opacity: 0;
+  transition: all 0.25s ease;
+  pointer-events: none;
+}
+.filter-close {
+  position: absolute;
+  padding: 5px 8px;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  font-size: 18px;
+}
+.filter-close:hover {
+  color: rgba(0,0,0,0.5);
+}
+@media screen and (max-width: 1300px) {
+  .results {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .content {
+    grid-template-areas: 
+      "sort sort"
+      "results results";
+    grid-template-columns: 1fr auto;
+  }
+  .filter {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 100;
+    transform: translateX(-100%);
+    transition: all 0.25s ease;
+    /* box-shadow: 0 0 10px 10px rgba(0,0,0,0.05); */
+  }
+  .filter-toggle {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .drawer-shade.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .filter.visible {
+    transform: none;
+  }
+}
+
+.search-content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "filter reviews";
+}
+
+.sort-direction {
+  transition: transform 0.25s ease;
+}
+
+.sort-direction.ascending {
+  transform: rotate(180deg);
+}
+
+.sort-input {
+  display: flex;
+  margin-left: auto;
+}
+
+.reviews-header {
+  display: flex;
 }
