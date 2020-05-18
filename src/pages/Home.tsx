@@ -279,9 +279,9 @@ const Filter = ({ onClose, visible }) => {
       <Form.Item name="position" label="Positions">
         <Select notFoundContent="" allowClear mode="tags" placeholder="Positions" />
       </Form.Item>
-      <Form.Item name="tools" label="Tools">
+      /*<Form.Item name="tools" label="Tools">
         <Select notFoundContent="" allowClear mode="tags" placeholder="Tools"></Select>
-      </Form.Item>
+      </Form.Item>*/
       {/* <div className="date-range">
         <Form.Item name="posted_from" label="Posted">
           <DatePicker picker="year" placeholder="from" />
