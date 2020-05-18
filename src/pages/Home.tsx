@@ -115,7 +115,7 @@ const Home = (props: HomeProps) => {
           //@ts-ignore
           reviews_data = fuse.search(search).map((entry) => entry.item);
         }
-        reviews_data = filterReviews(reviews_data, keys, {threshold = 0});
+        reviews_data = filterReviews(reviews_data, keys, {threshold: 0.1});
 
         if (key && key !== "relevance") {
           reviews_data.sort(sortFunctions[key]);
