@@ -59,78 +59,72 @@ interface HomeProps extends RouteComponentProps {
   children?: any;
 }
 const Home = (props: HomeProps) => {
-  const searchOptions = ["Position", "Company", "Description"];
   const location = useLocation();
-  const [searchState, setSearchState] = useState<{ indeterminate: boolean; checkAll: boolean; checkedList: CheckboxValueType[] }>({
-    indeterminate: false,
-    checkedList: ["Position", "Company", "Description"],
-    checkAll: true,
-  });
   const [reviews, setReviews] = useState<Review[] | undefined>(undefined);
   const [searchText, setSearchText] = useState<string>("");
   const [showFilter, setShowFilter] = useState<boolean>(false);
   var urlParams = new URLSearchParams(props.location?.search);
 
   useEffect(() => {
+    function getReviews(search) {
+      urlParams = new URLSearchParams(search);
+
+      // console.log(Array.from(urlParams.entries()));
+
+      database
+        .collection("review")
+        .where("is_visible", "==", true)
+        .get()
+        .then((data) => {
+          let reviews_data = data.docs.map((d) => d.data());
+
+          let params = new URLSearchParams(props.location?.search);
+
+          let keys: { search?: string; sort?: string; key?: string } = {};
+          //@ts-ignore
+          for (let entry of params.entries()) {
+            // each 'entry' is a [key, value] tupple
+            const [key, value] = entry;
+            keys[key] = value;
+          }
+          let { search, sort, key } = keys;
+          delete keys.search;
+          delete keys.sort;
+          delete keys.key;
+
+          if (search) {
+            //@ts-ignore
+            const fuse = new Fuse(reviews_data, {
+              threshold: 0.5,
+              useExtendedSearch: true,
+              keys: ["tools.often", "tools.occasionally", "tools.rarely", "company.name", "position", "description", "team", "school.name", "major"],
+            });
+            //@ts-ignore
+            reviews_data = fuse.search(search).map((entry) => entry.item);
+          }
+          reviews_data = filterReviews(reviews_data, keys);
+
+          if (key && key !== "relevance") {
+            reviews_data.sort(sortFunctions[key]);
+          } else if (!key && (urlParams.keys().next().done || urlParams.keys().next().value === "page")) {
+            reviews_data.sort(sortFunctions["date"]);
+          }
+          if (sort === "ascending") {
+            reviews_data = reviews_data.reverse();
+          }
+          setReviews(reviews_data as Review[]);
+        })
+        .catch((err) => {
+          // console.log(err);
+        });
+    }
     // getReviews(props.location?.search);
     // return globalHistory.listen(({ location }) => {
     //   getReviews(location.search);
     // });
     setSearchText(urlParams.get("text") || "");
     getReviews(location.search);
-  }, [location]);
-
-  function getReviews(search) {
-    urlParams = new URLSearchParams(search);
-    // console.log(Array.from(urlParams.entries()));
-
-    database
-      .collection("review")
-      .where("is_visible", "==", true)
-      .get()
-      .then((data) => {
-        let reviews_data = data.docs.map((d) => d.data());
-
-        let params = new URLSearchParams(props.location?.search);
-
-        let keys: { search?: string; sort?: string; key?: string } = {};
-        //@ts-ignore
-        for (let entry of params.entries()) {
-          // each 'entry' is a [key, value] tupple
-          const [key, value] = entry;
-          keys[key] = value;
-        }
-        let { search, sort, key } = keys;
-        delete keys.search;
-        delete keys.sort;
-        delete keys.key;
-
-        if (search) {
-          //@ts-ignore
-          const fuse = new Fuse(reviews_data, {
-            threshold: 0.5,
-            useExtendedSearch: true,
-            keys: ["tools.often", "tools.occasionally", "tools.rarely", "company.name", "position", "description", "team", "school.name", "major"],
-          });
-          //@ts-ignore
-          reviews_data = fuse.search(search).map((entry) => entry.item);
-        }
-        reviews_data = filterReviews(reviews_data, keys);
-
-        if (key && key !== "relevance") {
-          reviews_data.sort(sortFunctions[key]);
-        } else if (!key && !search) {
-          reviews_data.sort(sortFunctions["date"]);
-        }
-        if (sort === "ascending") {
-          reviews_data = reviews_data.reverse();
-        }
-        setReviews(reviews_data as Review[]);
-      })
-      .catch((err) => {
-        // console.log(err);
-      });
-  }
+  }, [location.search]);
 
   const [page, setPage] = useState<number>(1);
   const [form] = Form.useForm();
@@ -152,6 +146,7 @@ const Home = (props: HomeProps) => {
     if ("search" in changed && Object.keys(changed).length === 1) {
       return;
     }
+    setPage(1);
     for (const [key, value] of Object.entries(changed)) {
       if (!value || (value as Array<string>).length === 0) {
         urlParams.delete(key);
@@ -191,7 +186,18 @@ const Home = (props: HomeProps) => {
           <Form.Item name="search" noStyle>
             <Input.Search placeholder="Search reviews" value={searchText} allowClear onChange={(e) => setSearchText(e.target.value)} onSearch={handleSearch} />
           </Form.Item>
-          <Button type="primary" className="filter-toggle" style={{ border: "none", marginLeft: "5px", height: "100%", marginRight: "auto", borderRadius: "5px" }} onClick={() => setShowFilter(true)}>
+          <Button
+            type="primary"
+            className="filter-toggle"
+            style={{
+              border: "none",
+              marginLeft: "5px",
+              height: "100%",
+              marginRight: "auto",
+              borderRadius: "5px",
+            }}
+            onClick={() => setShowFilter(true)}
+          >
             <FilterOutlined />
           </Button>
         </div>
@@ -336,7 +342,17 @@ const SortInput: React.FC<SortInput> = ({ value = "descending", onChange }) => {
 
   return (
     <div className="sort">
-      <Button className={"sort-direction " + value} shape="circle" style={{ border: "none", background: "none", padding: "0", boxShadow: "none" }} onClick={onClick}>
+      <Button
+        className={"sort-direction " + value}
+        shape="circle"
+        style={{
+          border: "none",
+          background: "none",
+          padding: "0",
+          boxShadow: "none",
+        }}
+        onClick={onClick}
+      >
         <ArrowDownOutlined />
       </Button>
     </div>
