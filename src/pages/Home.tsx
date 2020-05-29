@@ -102,7 +102,7 @@ const Home = (props: HomeProps) => {
             //@ts-ignore
             reviews_data = fuse.search(search).map((entry) => entry.item);
           }
-          reviews_data = filterReviews(reviews_data, keys);
+          reviews_data = filterReviews(reviews_data, keys, { threshold: 0.1 });
 
           if (key && key !== "relevance") {
             reviews_data.sort(sortFunctions[key]);
@@ -285,9 +285,9 @@ const Filter = ({ onClose, visible }) => {
       <Form.Item name="position" label="Positions">
         <Select notFoundContent="" allowClear mode="tags" placeholder="Positions" />
       </Form.Item>
-      <Form.Item name="tools" label="Tools">
+      {/*<Form.Item name="tools" label="Tools">
         <Select notFoundContent="" allowClear mode="tags" placeholder="Tools"></Select>
-      </Form.Item>
+      </Form.Item>*/}
       {/* <div className="date-range">
         <Form.Item name="posted_from" label="Posted">
           <DatePicker picker="year" placeholder="from" />
