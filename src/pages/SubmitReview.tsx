@@ -135,6 +135,7 @@ const DynamicRule = () => {
 			rounds: values.rounds || "",
 			formats: values.formats || [],
 			interview_types: values.interview_types || [],
+			feedback: values.feedback || "",
 			is_visible: false,
 		};
 		// console.log(review);
