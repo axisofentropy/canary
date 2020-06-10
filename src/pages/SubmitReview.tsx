@@ -160,10 +160,12 @@ const DynamicRule = () => {
 						navigate("/submit-success");
 					})
 					.catch((err) => {
+						console.log(err);
 						navigate("/submit-error");
 					});
 			})
 			.catch((err) => {
+				console.log(err);
 				navigate("/submit-error");
 			});
 	};
