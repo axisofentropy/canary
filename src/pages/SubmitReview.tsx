@@ -110,7 +110,7 @@ const DynamicRule = () => {
 			overall_rating: values.overall_rating,
 			culture_rating: values.culture_rating,
 			work_rating: values.work_rating,
-			year: values.year,
+			year: Object.assign({ year: "1st", grad_level: "undergraduate" }, values.year),
 			school: values.school,
 			major: values.major,
 			other_studies: values.other_studies || "",
@@ -375,8 +375,7 @@ const AboutYou = () => (
 					message: "Please select your year",
 				},
 			]}
-			label="Year completed prior to internship"
-			extra="The latest year of college you completed before taking your internship"
+			label="Year in school when you applied to job"
 		>
 			<YearInput />
 		</Form.Item>
@@ -920,8 +919,8 @@ interface YearInputProps {
 }
 
 const YearInput: React.FC<YearInputProps> = ({ value = {}, onChange }) => {
-	const [gradLevel, setGradLevel] = useState();
-	const [year, setYear] = useState();
+	const [gradLevel, setGradLevel] = useState<"undergraduate" | "graduate" | "graduated">();
+	const [year, setYear] = useState<"1st" | "2nd" | "3rd" | "4th" | "5th" | "6th+">();
 
 	const triggerChange = (changedValue) => {
 		if (onChange) {
@@ -933,16 +932,22 @@ const YearInput: React.FC<YearInputProps> = ({ value = {}, onChange }) => {
 		let newVal = e.target.value;
 		if (!("grad_level" in value)) {
 			setGradLevel(newVal);
+			if (!("year" in value)) {
+				setYear("1st");
+			}
 		}
-		triggerChange({ grad_level: newVal });
+		triggerChange({ grad_level: newVal, year: value.year || "1st" });
 	};
 
 	const onCurrencyChange = (e) => {
 		let newVal = e.target.value;
-		if (!("currency" in value)) {
+		if (!("year" in value)) {
 			setYear(newVal);
+			if (!("grad_level" in value)) {
+				setGradLevel("undergraduate");
+			}
 		}
-		triggerChange({ year: newVal });
+		triggerChange({ year: newVal, grad_level: value.grad_level || "undergraduate" });
 	};
 
 	return (
