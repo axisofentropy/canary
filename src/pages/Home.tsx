@@ -264,7 +264,7 @@ const Home = (props: HomeProps) => {
 							{reviews ? (
 								reviews.length > 0 ? (
 									reviews
-										.slice((page - 1) * 10, page * 10)
+										.slice((page - 1) * reviewsPerPage, page * reviewsPerPage)
 										.map((review, i) => (
 											<CompanyCard
 												key={review.id}

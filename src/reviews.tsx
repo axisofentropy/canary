@@ -35,6 +35,9 @@ export interface Review {
 	interview_advice: string;
 	optional_remarks: string;
 	is_visible: boolean;
+	rounds: "1" | "2" | "3" | "4+";
+	formats: ("in_person" | "remote" | "recorded" | "online_test")[];
+	interview_types: ("behavioral" | "technical" | "case" | "past_experience")[];
 }
 
 export interface Company {
