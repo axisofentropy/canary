@@ -113,7 +113,7 @@ const Home = (props: HomeProps) => {
 						reviews_data = fuse.search(search).map((entry) => entry.item);
 					}
 					reviews_data = filterReviews(reviews_data, keys, {
-						threshold: 0.1,
+						threshold: 0.2,
 						useExtendedSearch: true,
 					});
 
