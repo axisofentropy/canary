@@ -330,14 +330,14 @@ const Filter = ({ onClose, visible }) => {
 			<Form.Item name="tools" label="Tools">
         <Select notFoundContent="" allowClear mode="tags" placeholder="Tools"></Select>
       </Form.Item>
-			{/* <div className="date-range">
+			<div className="date-range">
         <Form.Item name="posted_from" label="Posted">
           <DatePicker picker="year" placeholder="from" />
         </Form.Item>
         <Form.Item name="posted_to" label={<div></div>}>
           <DatePicker picker="year" placeholder="to" />
         </Form.Item>
-      </div> */}
+      </div>
 			<h3>Intern profile</h3>
 			<Form.Item name="major" label="Majors">
 				<Select
