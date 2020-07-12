@@ -219,3 +219,17 @@
 .reviews-header {
   display: flex;
 }
+
+.card_amazon {
+  width: 80%;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  margin: auto;
+}
+
+.btn-orange {
+  background-color: #ffbd00;
+  color: #ffffff !important;
+
+}
