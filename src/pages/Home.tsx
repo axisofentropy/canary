@@ -184,7 +184,11 @@ const Home = (props: HomeProps) => {
 			<div className="jumbotron">
 				<div className="jumbotron__content block">
 					<h1>
-						Internship reviews by students, for students
+						Internship reviews by students,
+					</h1>
+					<br>
+					<h1>
+						for students
 					</h1>
 					<div className="jumbotron__review">
 						Empower your peers &ensp;{" "}
