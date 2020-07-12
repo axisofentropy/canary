@@ -194,9 +194,7 @@ const Home = (props: HomeProps) => {
 					</div>
 				</div>
 				<p className="jumbotron__subtitle block">Internship and co-op reviews by students, for students</p>
-								
-			</div>
-			
+
 				 <div className="card_amazon shadow-sm">
 					  <h5 className="card_amazon_header">🔥 Featured</h5>
 					  <div className="card_amazon_body">
@@ -205,7 +203,10 @@ const Home = (props: HomeProps) => {
 						   <a href="#" className="btn btn-orange">Leave a review</a>
  		 		 	   </div>
 				</div>
-			
+				
+				
+			</div>
+				
 			
 			<div
 				className={classNames("drawer-shade", { visible: showFilter })}
