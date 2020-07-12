@@ -38,7 +38,7 @@ const ReviewCard = ({ review, note = "", wordLimit = 35, charLimit=300 }: Review
           {/* <Stat title="Overall">
             <Rate character="●" style={{ color: rateColor(review.overall_rating) }} value={review.overall_rating} disabled allowHalf />
           </Stat> */}
-          <Stat title="Work Satisfaction">
+          <Stat title="Work">
             <Rate character="●" style={{ color: rateColor(review.work_rating) }} value={review.work_rating} disabled allowHalf />
           </Stat>
           <Stat title="Culture">
