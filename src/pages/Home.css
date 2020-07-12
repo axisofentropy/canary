@@ -42,7 +42,7 @@
   margin: 0 auto 30px auto;
   padding: 40px 20px;
   font-size: 20px;
-  display: flex;
+  display: block;
   justify-content: center;
 }
 
