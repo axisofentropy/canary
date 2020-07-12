@@ -232,7 +232,7 @@ const Home = (props: HomeProps) => {
 							onSearch={handleSearch}
 						/>
 					</Form.Item>
-					<Button
+					{/*<Button
 						type="primary"
 						className="filter-toggle"
 						style={{
@@ -245,7 +245,7 @@ const Home = (props: HomeProps) => {
 						onClick={() => setShowFilter(true)}
 					>
 						<FilterOutlined />
-					</Button>
+					</Button>*/}
 				</div>
 				<div className="search-content">
 					<Filter onClose={() => setShowFilter(false)} visible={showFilter} />
