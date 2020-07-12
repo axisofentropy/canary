@@ -182,7 +182,7 @@ const Home = (props: HomeProps) => {
 	return (
 		<div className="Home">
 			<div className="jumbotron">
-				<div className="jumbotron__content">
+				<div className="jumbotron__content block">
 					<h1>
 						The internship process, democratized
 					</h1>
@@ -193,7 +193,7 @@ const Home = (props: HomeProps) => {
 						</Button>
 					</div>
 				</div>
-				<p className="jumbotron__subtitle">Internship and co-op reviews by students, for students</p>
+				<p className="jumbotron__subtitle block">Internship and co-op reviews by students, for students</p>
 			</div>
 			<div
 				className={classNames("drawer-shade", { visible: showFilter })}
