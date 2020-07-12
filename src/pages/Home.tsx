@@ -200,7 +200,7 @@ const Home = (props: HomeProps) => {
 					  <div className="card-body">
 					   <h5 className="card-title">Leave a review to win an Amazon gift card!</h5>
 					   <p className="card-text">We know some Amazon bucks go a long way (we're students too, remember 😉). So 1 out of every 20 reviews will receive a $20 Amazon gift card!</p>
-					   <a href="#" class="btn btn-orange">Leave a review</a>
+					   <a href="#" className="btn btn-orange">Leave a review</a>
  		 		 </div>
 
 
