@@ -243,6 +243,7 @@
     border-bottom: 1px solid rgba(0,0,0,.125);
     border-top-left-radius: .5rem;
     border-top-right-radius: .5rem;
+    font-size: larger;
   
 }
 
@@ -255,4 +256,12 @@
     border-bottom-left-radius: .5rem;
     border-bottom-right-radius: .5rem;
     background-color: white;
+}
+
+.card_amazon_title {
+    font-size: larger;
+}
+
+.card_amazon_text {
+    font-size: medium; 
 }
