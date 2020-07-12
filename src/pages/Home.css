@@ -72,6 +72,7 @@
   position: absolute;
   top: 100%;
   right: 0;
+  margin-top: 50px;
 }
 
 .jumbotron__review .ant-btn {
@@ -222,7 +223,6 @@
 
 .card_amazon {
   opacity: 1.0;
-  width: 80% !important;
   background-clip: border-box !important;
   border: 1px solid rgba(0,0,0,.125) !important;
   border-radius: .5rem !important;
@@ -230,7 +230,7 @@
   margin-right: auto !important;
   margin-top: 50px !important;
   margin-bottom: 10px !important;
-  width: 60% !important;
+  width: 75% !important;
   height: 15% !important;
 }
 
