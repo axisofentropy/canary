@@ -202,8 +202,8 @@ const Home = (props: HomeProps) => {
 			 <div className="card_amazon shadow-sm">
 				  <h5 className="card_amazon_header">🔥 Featured</h5>
 				  <div className="card_amazon_body">
-					   <h5 className="card-title">Leave a review to win an Amazon gift card!</h5>
-					   <p className="card-text">We know some Amazon bucks go a long way (we're students too, remember 😉). So 1 out of every 20 reviews will receive a $20 Amazon gift card!</p>
+					   <h5 className="card_amazon_title">Leave a review to win an Amazon gift card!</h5>
+					   <p className="card_amazon_text">We know some Amazon bucks go a long way (we're students too, remember 😉). So 1 out of every 20 reviews will receive a $20 Amazon gift card!</p>
 					   <Button type="primary" onClick={() => navigate("/submit")}>
 							✎ Write a Review
 					   </Button>
