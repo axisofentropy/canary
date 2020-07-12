@@ -195,7 +195,7 @@ const Home = (props: HomeProps) => {
 				</div>
 				<p className="jumbotron__subtitle block">Internship and co-op reviews by students, for students</p>
 				
-				 <div class="card_amazon shadow-sm">
+				 <div className="card_amazon shadow-sm">
 					  <h5 class="card-header">🔥 Featured</h5>
 					  <div class="card-body">
 					   <h5 class="card-title">Leave a review to win an Amazon gift card!</h5>
