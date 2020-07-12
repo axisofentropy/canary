@@ -194,15 +194,17 @@ const Home = (props: HomeProps) => {
 					</div>
 				</div>
 				<p className="jumbotron__subtitle block">Internship and co-op reviews by students, for students</p>
+				
+				<div class="card_amazon shadow-sm">
+					<h5 class="card-header">🔥 Featured</h5>
+					<div class="card-body">
+					<h5 class="card-title">Leave a review to win an Amazon gift card!</h5>
+					<p class="card-text">We know some Amazon bucks go a long way (we're students too, remember 😉). So 1 out of every 20 reviews will receive a $20 Amazon gift card!</p>
+				<a href="#" class="btn btn-orange">Leave a review</a>
+  				</div>
+				
 			</div>
 			
-			{/*<div class="card_amazon shadow-sm">
-  				<h5 class="card-header">🔥 Featured</h5>
-  				<div class="card-body">
-    				<h5 class="card-title">Leave a review to win an Amazon gift card!</h5>
-    				<p class="card-text">We know some Amazon bucks go a long way (we're students too, remember 😉). So 1 out of every 20 reviews will receive a $20 Amazon gift card!</p>
-    				<a href="#" class="btn btn-orange">Leave a review</a>
-  			</div> */}
 			
 			<div
 				className={classNames("drawer-shade", { visible: showFilter })}
