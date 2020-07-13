@@ -101,7 +101,7 @@
 .review__work-rating {
 	position: relative;
 	grid-area: work;
-	width 120px;
+	width: 120px;
 }
 
 .rating-number {
