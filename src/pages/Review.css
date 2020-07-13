@@ -95,13 +95,11 @@
 
 .review__culture-rating {
 	grid-area: culture;
-	width: 70px !important;
 }
 
 .review__work-rating {
 	position: relative;
 	grid-area: work;
-	width: 70px !important;
 }
 
 .rating-number {
