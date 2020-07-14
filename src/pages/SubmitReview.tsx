@@ -458,7 +458,7 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 			label={
 				<span>
 					Is this a structured internship/co-op program?&nbsp;
-					<Tooltip title="Employers usually make it clear on their hiring websites that the program you enrolled in was a structured program">
+					<Tooltip title="Structured programs will usually have other interns, scheduled events/trainings, advisor check-ins, etc.">
 						<QuestionCircleOutlined />
 					</Tooltip>
 				</span>
@@ -513,7 +513,7 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 			rules={[
 				{
 					required: true,
-					message: "Please input your pay",
+					message: "Please input your pay (hourly, stipend, etc.)",
 				},
 			]}
 		>
@@ -539,7 +539,7 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 			label="Did you accept a full-time offer here?"
 			rules={[
 				{
-					required: true,
+					required: false,
 					message: "Please select an option",
 				},
 			]}
@@ -750,6 +750,10 @@ const InternshipExperience = () => (
 				tokenSeparators={[","]}
 			></Select>
 		</Form.Item>
+		
+		
+		{/* Tools used rarely input */}
+		{/*
 		<Form.Item name="tools_rarely" label="Software/Tools you used rarely">
 			<Select
 				mode="tags"
@@ -758,7 +762,11 @@ const InternshipExperience = () => (
 				style={{ width: "100%", maxWidth: "340px" }}
 				tokenSeparators={[","]}
 			></Select>
-		</Form.Item>
+		</Form.Item> /*}
+		
+		
+		
+		
 		{/* <Form.Item
       shouldUpdate={(prevValues, currentValues) => prevValues.work_rating !== currentValues.work_rating}>
       
@@ -791,7 +799,7 @@ const InternshipExperience = () => (
 			rules={[
 				{
 					required: true,
-					message: "Please rate your company's work",
+					message: "Please rate the work you did",
 				},
 			]}
 		>
@@ -823,7 +831,7 @@ const InternshipExperience = () => (
 		</Form.Item>
 		<Form.Item
 			name="description"
-			label="Describe your internship."
+			label="Briefly describe your main project(s)."
 			rules={[
 				{
 					required: true,
@@ -832,8 +840,8 @@ const InternshipExperience = () => (
 			]}
 		>
 			<Input.TextArea
-				placeholder="What did you do? What projects did you work on? What did your day-to-day look like?"
-				rows={3}
+				placeholder="Briefly describe your main project - there's room for any other comments later!"
+				rows={1}
 			></Input.TextArea>
 		</Form.Item>
 		<Form.Item
@@ -848,6 +856,10 @@ const InternshipExperience = () => (
 		>
 			<Input />
 		</Form.Item>
+		
+		
+		{/* Would NOT Recommend input */}
+		{/*
 		<Form.Item
 			name="not_recommend"
 			label={
@@ -863,8 +875,10 @@ const InternshipExperience = () => (
 			]}
 		>
 			<Input />
-		</Form.Item>
-		<Form.Item name="optional_remarks" label="(Optional) Closing remarks/advice">
+		</Form.Item> */}
+		
+		
+		<Form.Item name="optional_remarks" label="(Optional) Anything else you want to share? Add any additonal thoughts/advice/stories here!">
 			<Input.TextArea rows={3}></Input.TextArea>
 		</Form.Item>
 	</div>
