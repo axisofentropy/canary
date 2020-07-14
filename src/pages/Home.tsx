@@ -188,12 +188,12 @@ const Home = (props: HomeProps) => {
 						for students
 					</h1>
 
-					<div className="jumbotron__review">
+					{/*<div className="jumbotron__review">
 						Empower your peers &ensp;{" "}
 						<Button type="primary" onClick={() => navigate("/submit")}>
 							✎ Write a Review
 						</Button>
-					</div>
+					</div>*/}
 				</div>
 				{/*<p className="jumbotron__subtitle block">Internship and co-op reviews by students, for students</p>*/}
 			
