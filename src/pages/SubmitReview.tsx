@@ -364,9 +364,15 @@ const AboutYou = () => (
         {majors}
       </Select> */}
 		</Form.Item>
-		<Form.Item name="other_studies" label="Other studies (minors, certificates, etc.)">
+		
+		
+		{/* Minors and other studies */}
+		
+		{/*<Form.Item name="other_studies" label="Other studies (minors, certificates, etc.)">
 			<Input style={{ maxWidth: "350px" }} placeholder="Please input your major" />
-		</Form.Item>
+		</Form.Item> */}
+		
+		
 		<Form.Item
 			name="year"
 			rules={[
