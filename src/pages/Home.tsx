@@ -189,7 +189,7 @@ const Home = (props: HomeProps) => {
 					</h1>
 
 					<div className="jumbotron__review">
-						Founded by college students wanting to bring transparency to the internship process, Canary is the best place for you to know what internships are really like{/* &ensp;{" "}
+						Founded by college students wanting to bring transparency to the internship process, Canary is the best place for you to learn what internships are really like, before you apply{/* &ensp;{" "}
 						{/*<Button type="primary" onClick={() => navigate("/submit")}>
 							✎ Write a Review
 						</Button>*/}
