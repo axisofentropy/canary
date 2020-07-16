@@ -140,7 +140,7 @@ const Review = (props: ReviewProps) => {
 										<Question label="Other areas of study">{review.other_studies}</Question>
 									)}
 								</div>
-								<div style={{ paddingLeft: "5px", paddingTop: "5px" }}>
+								<div style={{ background-color: "red", paddingLeft: "5px", paddingTop: "5px" }}>
 									<div className="review__compensation">
 										<h4>Compensation</h4>
 										<Question label="Pay">
