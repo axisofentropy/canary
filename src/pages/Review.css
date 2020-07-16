@@ -18,11 +18,8 @@
 
 
 
-.review__description p::before{
-	content: " ";
-	height: 100%;
-	width: 4px;
-	background: red;
+.review__leftLine {
+	border-left: 4px solid red;
 }
 
 
