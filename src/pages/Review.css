@@ -126,7 +126,7 @@
 .question__content {
 	/* padding: 0 5px; */
 	margin-bottom: 5px;
-	border-left: 2px #ffbd00;
+	border-left: 2px solid #ffbd00;
 }
 
 .review__content .stat {
