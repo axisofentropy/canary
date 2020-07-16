@@ -174,7 +174,7 @@ const Review = (props: ReviewProps) => {
 											)}
 										</div>
 									</div>
-									<div className="review__future">
+									<div className="review__offer">
 										<h4>Offers</h4>
 										<Question label="Offered full time position?">
 											{
