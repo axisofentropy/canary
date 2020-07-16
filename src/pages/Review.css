@@ -13,27 +13,6 @@
 	margin-bottom: 4px;
 }
 
-
-
-
-
-
-.review__leftLine {
-	border-left: 4px solid red;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 .review__company {
 	display: flex;
 	flex-wrap: wrap;
@@ -58,6 +37,7 @@
 .review p {
 	padding: 0 0 0 10px;
 	border-left: 2px solid orange;
+	margin-left:4px;
 }
 
 .review__company-description {
