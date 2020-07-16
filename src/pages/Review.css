@@ -202,9 +202,9 @@
 }
 
 .review__compensation {
-	background: #ededed;
-	border-radius: 5px;
 	padding: 15px;
+	background: #ededed;
+	border-radius: 5px;	
 	margin-bottom: 5px;
 	
 }
