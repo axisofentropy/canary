@@ -57,6 +57,7 @@
 
 .review p {
 	padding: 0 0 0 10px;
+	border-left: 2px solid orange;
 }
 
 .review__company-description {
