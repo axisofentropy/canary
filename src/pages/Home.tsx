@@ -184,8 +184,8 @@ const Home = (props: HomeProps) => {
 			<div className="jumbotron">
 				<div className="jumbotron__content block">
 					<h1>
-						Internship reviews <i>for</i> students,<br/>
-						<i>by</i> students
+						Internship reviews for students,<br/>
+						by students
 					</h1>
 
 					{/*<div className="jumbotron__review">
