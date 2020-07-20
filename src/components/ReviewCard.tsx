@@ -32,7 +32,7 @@ const ReviewCard = ({ review, note = "", wordLimit = 35, charLimit=300 }: Review
     <div className="review-card">
       <div className="review-card__header">
         <div className="review-card__overall-rating" style={{ background: rateColor(review.overall_rating) }}>{review.overall_rating}<span className="divisor">/5</span>
-          
+
         </div>
         <div className="review-card__stats">
           {/* <Stat title="Overall">
@@ -51,7 +51,8 @@ const ReviewCard = ({ review, note = "", wordLimit = 35, charLimit=300 }: Review
         </div>
       </div>
       <div className="review-card__content">
-        <h2 className="review-card__position">{review.position} <span className="review-card__team">{review.team}</span></h2>
+        <h2 className="review-card__position">{review.position}</h2>
+        <span className="review-card__team">{review.team}</span>
         <div className="review-card__description">{truncateDescription(review.description)}</div>
         <div className="review-card__footer">
           <Stat title="Pay">
@@ -67,7 +68,7 @@ const ReviewCard = ({ review, note = "", wordLimit = 35, charLimit=300 }: Review
             {review.year.grad_level ? review.year.grad_level.charAt(0).toUpperCase() + review.year.grad_level.substring(1) : ''}, {review.year.year} year
           </Stat> */}
           <div className="review-card__view">
-            <Link to={"/reviews/" + review.id}>Read more <ArrowRightOutlined/></Link>
+            <Link className="review-card__view-text" to={"/reviews/" + review.id}>Read more <ArrowRightOutlined/></Link>
           </div>
         </div>
       </div>

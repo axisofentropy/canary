@@ -72,10 +72,9 @@ const Home = (props: HomeProps) => {
 			// console.log(Array.from(urlParams.entries()));
 
 			database
-				.collection("review")
-				.where("is_visible", "==", true)
-				.get()
-				.then((data) => {
+				// Pull in all the reviews: make this only pull in relvant reviews
+				.collection("review").where("is_visible", "==", true).get().then((data) => {
+
 					let reviews_data = data.docs.map((d) => d.data());
 
 					let params = new URLSearchParams(props.location?.search);
@@ -187,7 +186,6 @@ const Home = (props: HomeProps) => {
 						Internship reviews for students,<br/>
 						by students
 					</h1>
-
 					<div className="jumbotron__review">
 						Learn what internships are really like, before you apply{/* &ensp;{" "}
 						{/*<Button type="primary" onClick={() => navigate("/submit")}>
@@ -196,23 +194,23 @@ const Home = (props: HomeProps) => {
 					</div>
 				</div>
 				{/*<p className="jumbotron__subtitle block">Internship and co-op reviews by students, for students</p>*/}
-			
-				
+
+
 			</div>
-			
+
 
 			 <div className="card_amazon shadow-sm">
 				  <h5 className="card_amazon_header">🔥 Featured</h5>
 				  <div className="card_amazon_body">
-					   <h5 className="card_amazon_title">Leave a review to win an Amazon gift card!</h5>
-					   <p className="card_amazon_text">We know some Amazon bucks go a long way (we're students too, remember 😉). So 1 out of every 20 reviews will receive a $20 Amazon gift card!</p>
+					   <h5 className="card_amazon_title">Leave a review and get an Amazon gift card!</h5>
+					   <p className="card_amazon_text">We know some Amazon bucks go a long way (we're students too, remember 😉). So for a limited time, you'll recieve a <b>$5 Amazon gift card</b> if you leave a review!</p>
 					   <Button type="primary" onClick={() => navigate("/submit")}>
 							✎ Write a Review
 					   </Button>
 				   </div>
 			</div>
-			
-			
+
+
 			<div
 				className={classNames("drawer-shade", { visible: showFilter })}
 				onClick={() => setShowFilter(false)}
@@ -313,9 +311,21 @@ const Home = (props: HomeProps) => {
 							pageSize={reviewsPerPage}
 							onShowSizeChange={(cur, pageSize) => setReviewsPerPage(pageSize)}
 						/>
+
+						<div className="writeReview_bottom">
+							<p>A student somewhere is looking for a review of where <b>you</b> worked! Leave a review to help them out!</p>
+							<Button type="primary" onClick={() => navigate("/submit")}>
+							 ✎ Write a Review
+							</Button>
+						</div>
+
+
 					</div>
 				</div>
 			</Form>
+
+
+
 		</div>
 	);
 };

@@ -11,6 +11,11 @@
   /* flex-wrap: wrap; */
 }
 
+.company-card__description {
+  color: #3339;
+
+}
+
 .company-card__img {
   /* width: 200px; */
   max-width: 200px;
@@ -32,7 +37,7 @@
   text-align: right;
   padding: 0 10px;
 }
-/* 
+/*
 .company-card__stats {
   display: flex;
   justify-content: flex-end;

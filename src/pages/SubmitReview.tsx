@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./SubmitReview.css";
+import {schools, locations, majors} from "./SubmitAutocomplete.js";
 
 import { useCookies } from "react-cookie";
 import { RouteComponentProps, navigate } from "@reach/router";
@@ -14,6 +15,9 @@ import {
 	Steps,
 	Checkbox,
 	InputNumber,
+	Slider,
+	Tabs,
+	AutoComplete,
 } from "antd/es";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { YearValue } from "../reviews";
@@ -21,6 +25,35 @@ import { database } from "../database";
 // import { InputChangeEvent } from 'antd/es/input';
 
 const { Option } = Select;
+
+const { TabPane } = Tabs;
+
+
+
+
+
+const marks_impact = {
+0: "No impact (busy-work)",
+1: "Not very impactful",
+2: "Somewhat impactful",
+3: "Impactful",
+4: "Very impactful"
+};
+
+const marks_prerequisites = {
+	0: "None (they'll teach you what you need to know)",
+	1: "Beginner (need basic knowledge/ experience)",
+	2: "Intermediate (need to be pretty familiar)",
+	3: "Expert (need to have advanced knowledge/ experience)"
+};
+
+const marks_timeworking = {
+	0: "0-20% (might as well have done nothing)",
+	1: "20-40% (worked some, but ton of down time)",
+	2: "40-60% (some days stayed busy, but still good bit of downtime)",
+	3: "60-80% (stayed pretty busy)",
+	4: "80-100% (more or less busy the whole time)"
+};
 
 // const formItemLayout = {
 //   labelCol: { span: 4 },
@@ -44,10 +77,10 @@ const { Option } = Select;
 //   "NCR",
 // ].map((option, i) => ({ value: option }))
 
-const years = ["2015", "2016", "2017", "2018", "2019", "2020"];
+const years = ["2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"];
 const semesters = ["Spring", "Summer", "Fall"];
 
-const terms = years
+const terms1 = years
 	.reduce((acc, year) => {
 		let perm = semesters.reduce((a, semester) => [...a, semester + " " + year], [] as string[]);
 		return acc.concat(perm);
@@ -57,6 +90,10 @@ const terms = years
 			{option}
 		</Option>
 	));
+
+	const terms = terms1.reverse();
+
+
 
 // const majors = [
 //   "Computer Science",
@@ -99,6 +136,7 @@ const DynamicRule = () => {
 			company: {
 				name: values.company_name || "",
 				description: "",
+				image:"",
 			},
 			position: values.position || "",
 			team: values.team || "",
@@ -122,7 +160,7 @@ const DynamicRule = () => {
 				occasionally: values.tools_occasionally || [],
 				rarely: values.tools_rarely || [],
 			},
-			description: values.description,
+			description: values.description || "",
 			offer: values.offer,
 			would_accept_offer: values.would_accept_offer || -1,
 			impact: values.impact,
@@ -137,6 +175,8 @@ const DynamicRule = () => {
 			interview_types: values.interview_types || [],
 			feedback: values.feedback || "",
 			is_visible: false,
+			project_description: values.project_description || "",
+
 		};
 		// console.log(review);
 
@@ -145,6 +185,7 @@ const DynamicRule = () => {
 			name: values.name,
 			email: values.email,
 			review_id: review.id,
+			user_timestamp: { seconds: new Date().getTime() / 1000 },
 		};
 
 		database
@@ -209,6 +250,9 @@ const DynamicRule = () => {
 			layout="vertical"
 			name="dynamic_rule"
 		>
+			<h3>🔥 For a limited time, get a <b>$5 Amazon gift card</b> when you leave a review!</h3>
+			<p>Once your review is approved by our moderation team, a gift card code will be sent to your email adress!</p>
+			<br></br>
 			<Steps direction="vertical">
 				<Steps.Step status="process" title="About you" description={<AboutYou />} />
 				<Steps.Step
@@ -252,6 +296,9 @@ const InterviewProcess = () => (
 				<Radio value={"4+"}>4+</Radio>
 			</Radio.Group>
 		</Form.Item>
+
+
+
 		<Form.Item
 			name="formats"
 			label="Format(s)"
@@ -272,6 +319,8 @@ const InterviewProcess = () => (
 				]}
 			/>
 		</Form.Item>
+
+
 		<Form.Item
 			name="interview_types"
 			label="Interview type"
@@ -296,7 +345,7 @@ const InterviewProcess = () => (
 			name="interview_advice"
 			label="Any other advice on the application/interview process?"
 		>
-			<Input.TextArea rows={2}></Input.TextArea>
+			<Input.TextArea rows={1}></Input.TextArea>
 		</Form.Item>
 	</div>
 );
@@ -305,7 +354,7 @@ const AboutYou = () => (
 	<div className="about-you">
 		<Form.Item
 			name="name"
-			label="Full name (will not be public)"
+			label="Name (will not be public)"
 			rules={[
 				{
 					required: true,
@@ -315,7 +364,8 @@ const AboutYou = () => (
 		>
 			<Input style={{ maxWidth: "250px" }} placeholder="Please input your full name" />
 		</Form.Item>
-		<Form.Item
+
+		{/*<Form.Item
 			name="school"
 			label="School"
 			rules={[
@@ -325,17 +375,41 @@ const AboutYou = () => (
 				},
 			]}
 		>
-			<Input style={{ maxWidth: "320px" }} placeholder="Please input your school" />
+			<Input style={{ maxWidth: "320px" }} placeholder="Please input your school"/>
 
-			{/* <AutoComplete
-        options={collegeSuggestions}
-        placeholder="Please input your school"
-        style={{ maxWidth: '320px' }}
-        filterOption={(inputValue, option) => option ? option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1 : false}/> */}
+		</Form.Item> */}
+
+
+		<Form.Item
+		name="school"
+		label="School"
+		rules={[
+			{
+				required: true,
+				message: "Please input your school",
+			},
+		]}
+	>
+		<AutoComplete
+		options={schools}
+		placeholder="Please input your school"
+		style={{ maxWidth: '320px' }}
+		filterOption={(inputValue, option) => option ? option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1 : false}/>
 		</Form.Item>
+
+
+
+
+
+
+
+
+
+
 		<Form.Item
 			name="email"
 			label="School email (will not be public)"
+			extra="This helps us verify you are actually a student and will be used to send your Amazon Gift card code!"
 			rules={[
 				{
 					required: true,
@@ -344,9 +418,11 @@ const AboutYou = () => (
 				},
 			]}
 		>
-			<Input style={{ maxWidth: "250px" }} placeholder="Please input your school email" />
+			<Input style={{ maxWidth: "250px" }} placeholder="name@school.edu" />
 		</Form.Item>
-		<Form.Item
+
+
+		{/*<Form.Item
 			name="major"
 			label="Major"
 			rules={[
@@ -357,22 +433,47 @@ const AboutYou = () => (
 			]}
 		>
 			<Input style={{ maxWidth: "320px" }} placeholder="Please input your major" />
+
 			{/* <Select
-        mode="tags"
-        placeholder="Please input your major(s)"
-        style={{ width: '100%', maxWidth: '340px' }} tokenSeparators={[',']}>
-        {majors}
-      </Select> */}
-		</Form.Item>
-		
-		
+				mode="tags"
+				placeholder="Please input your major(s)"
+				style={{ width: '100%', maxWidth: '340px' }} tokenSeparators={[',']}>
+				{majors}
+			</Select>
+		</Form.Item> */}
+
+
+			<Form.Item
+			name="major"
+			label="Major"
+			rules={[
+				{
+					required: true,
+					message: "Please input your major",
+				},
+			]}
+		>
+			<AutoComplete
+			options={majors}
+			placeholder="Please input your major"
+			style={{ maxWidth: '320px' }}
+			filterOption={(inputValue, option) => option ? option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1 : false}/>
+			</Form.Item>
+
+
+
+
+
+
+
+
 		{/* Minors and other studies */}
-		
+
 		{/*<Form.Item name="other_studies" label="Other studies (minors, certificates, etc.)">
 			<Input style={{ maxWidth: "350px" }} placeholder="Please input your major" />
 		</Form.Item> */}
-		
-		
+
+
 		<Form.Item
 			name="year"
 			rules={[
@@ -504,7 +605,12 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 				},
 			]}
 		>
-			<Input style={{ maxWidth: "340px" }} placeholder="Please input your internship's location" />
+			{/*<Input style={{ maxWidth: "340px" }} placeholder="Please input your internship's location" />*/}
+			<AutoComplete
+			options={locations}
+			placeholder="Please input your internship's location"
+			style={{ maxWidth: '340px' }}
+			filterOption={(inputValue, option) => option ? option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1 : false}/>
 		</Form.Item>
 		<Form.Item
 			name="pay"
@@ -620,6 +726,10 @@ const InternshipExperience = () => (
 				</Radio>
 			</Radio.Group>
 		</Form.Item>
+
+
+		{/* How was it different text box input */}
+		{/*
 		<Form.Item
 			noStyle
 			shouldUpdate={(prevValues, currentValues) =>
@@ -641,8 +751,11 @@ const InternshipExperience = () => (
 					<div></div>
 				);
 			}}
-		</Form.Item>
-		<Form.Item
+		</Form.Item> */}
+
+
+
+		{/*}<Form.Item
 			name="impact"
 			label="Impact of your work"
 			rules={[
@@ -669,8 +782,18 @@ const InternshipExperience = () => (
 					Very impactful
 				</Radio>
 			</Radio.Group>
+		</Form.Item> */}
+
+		<Form.Item name="impact"	label="Impact of your work"	extra="" rules={[
+							{	required: true,
+								message: "please slide",
+							},]}>
+
+					<Slider marks={marks_impact} defaultValue={0} tooltipVisible={false} step={5} min={0} max={4}	className="submit_slider"/>
 		</Form.Item>
-		<Form.Item
+
+
+		{/*}<Form.Item
 			name="prerequisites"
 			label="How much knowledge or experience was needed going in?"
 			rules={[
@@ -694,8 +817,19 @@ const InternshipExperience = () => (
 					Expert - need to have advanced knowledge / multiple prior experiences in this area
 				</Radio>
 			</Radio.Group>
+		</Form.Item> */}
+
+
+		<Form.Item name="prerequisites"	label="How much knowledge or experience was needed going in?"	extra="" rules={[
+							{	required: true,
+								message: "Please selet an option",
+							},]}>
+
+					<Slider marks={marks_prerequisites} defaultValue={0} tooltipVisible={false} step={4} min={0} max={3}	className="submit_slider submit_slider_prerequisites"/>
 		</Form.Item>
-		<Form.Item
+
+
+		{/*<Form.Item
 			name="work_time"
 			label="How much of your time were you actively working? (versus waiting for work)"
 			rules={[
@@ -722,7 +856,17 @@ const InternshipExperience = () => (
 					80-100% (I was more or less busy the whole time)
 				</Radio>
 			</Radio.Group>
+		</Form.Item> */}
+
+		<Form.Item name="work_time"	label="How much of your time were you actively working? (versus waiting for work)"	extra="" rules={[
+							{	required: true,
+								message: "Please selet an option",
+							},]}>
+
+					<Slider marks={marks_timeworking} defaultValue={0} tooltipVisible={false} step={5} min={0} max={4}	className="submit_slider submit_slider_worktime"/>
 		</Form.Item>
+
+
 		<Form.Item
 			name="tools_often"
 			label="Software/Tools you used most often"
@@ -750,8 +894,8 @@ const InternshipExperience = () => (
 				tokenSeparators={[","]}
 			></Select>
 		</Form.Item>
-		
-		
+
+
 		{/* Tools used rarely input */}
 		{/*
 		<Form.Item name="tools_rarely" label="Software/Tools you used rarely">
@@ -763,13 +907,13 @@ const InternshipExperience = () => (
 				tokenSeparators={[","]}
 			></Select>
 		</Form.Item> /*}
-		
-		
-		
-		
+
+
+
+
 		{/* <Form.Item
       shouldUpdate={(prevValues, currentValues) => prevValues.work_rating !== currentValues.work_rating}>
-      
+
       {({ getFieldValue }) => (
         <div>
           <Form.Item
@@ -830,7 +974,7 @@ const InternshipExperience = () => (
 			<Rate count={5} allowHalf defaultValue={0} />
 		</Form.Item>
 		<Form.Item
-			name="description"
+			name="project_description"
 			label="Briefly describe your main project(s)."
 			rules={[
 				{
@@ -840,8 +984,8 @@ const InternshipExperience = () => (
 			]}
 		>
 			<Input.TextArea
-				placeholder="Briefly describe your main project - there's room for any other comments later!"
-				rows={1}
+				placeholder="Describe your main project - there's room for any other comments later!"
+				rows={2}
 			></Input.TextArea>
 		</Form.Item>
 		<Form.Item
@@ -849,17 +993,17 @@ const InternshipExperience = () => (
 			label="Would recommend it to people who..."
 			rules={[
 				{
-					required: true,
+					required: false,
 					message: "Please describe who you would recommend this internship to",
 				},
 			]}
 		>
 			<Input />
 		</Form.Item>
-		
-		
+
+
 		{/* Would NOT Recommend input */}
-		{/*
+
 		<Form.Item
 			name="not_recommend"
 			label={
@@ -869,18 +1013,23 @@ const InternshipExperience = () => (
 			}
 			rules={[
 				{
-					required: true,
+					required: false,
 					message: "Please describe who you would NOT recommend this internship to",
 				},
 			]}
 		>
 			<Input />
-		</Form.Item> */}
-		
-		
-		<Form.Item name="optional_remarks" label="(Optional) Anything else you want to share? Add any additonal thoughts/advice/stories here!">
+		</Form.Item>
+
+
+		<Form.Item name="optional_remarks" label="Anything else you want to share? Like it? Hate it? What did you learn? Add any additonal thoughts/advice/stories here!">
 			<Input.TextArea rows={3}></Input.TextArea>
 		</Form.Item>
+
+
+
+
+
 	</div>
 );
 
@@ -906,7 +1055,7 @@ const Submit = ({ onSubmit }) => (
 			name="feedback"
 			label="Any thoughts or feedback about Canary? What would you like from this type of platform?"
 		>
-			<Input.TextArea rows={3}></Input.TextArea>
+			<Input.TextArea rows={1}></Input.TextArea>
 		</Form.Item>
 		<Form.Item
 			name="permission"
@@ -915,10 +1064,12 @@ const Submit = ({ onSubmit }) => (
 			valuePropName="checked"
 		>
 			<Checkbox>
-				I give permission to Canary to share my anonymized information on its website and with third
-				parties. (We take privacy and anonymity seriously - we will NOT share your name or email)
+				By clicking the checkbox, I give permission to Canary to share my anonymized information on its website and with third
+				parties. I have read and agree to Canary's <a href="https://drive.google.com/file/d/1H04VfyYI4EFOhgfS3Twur3gky6k8K9dM/view?usp=sharing">Reservation of Rights</a> and <a href="https://drive.google.com/file/d/10r35P3iHzBMvLncvOcpgc2GjPqNbWunm/view?usp=sharing">Terms of Service</a>. I understand submitted information becomes the property of Canary. (We take privacy and anonymity
+			  seriously - we will NOT share your name or email.)
 			</Checkbox>
 		</Form.Item>
+		<h3>Your $5 Amazon gift card code will be sent to your email once your review is approved by our moderation team! (You can expect it within 24 hours)</h3>
 		<Form.Item>
 			<Button type="primary" htmlType="submit">
 				Submit

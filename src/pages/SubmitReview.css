@@ -88,6 +88,33 @@
 }
 
 .SubmitReview .ant-checkbox-group-item.ant-checkbox-wrapper {
-  display: block;
+  display: inline-table;
   margin-bottom: 4px;
+}
+
+.submit_slider {
+  display: block;
+  margin-right: 60px;
+  margin-left: 40px;
+  margin-bottom: 60px;
+}
+
+.submit_slider_prerequisites {
+  margin-bottom: 110px;
+}
+
+.submit_slider_worktime {
+  margin-bottom: 150px;
+}
+
+
+.ant-slider-mark-text, .ant-slider-mark-text-active span {
+  width: 55px !important;
+  font-size: .8rem;
+}
+
+.about-you {
+  flex-direction: row;
+
+
 }

@@ -62,10 +62,14 @@ const Review = (props: ReviewProps) => {
 							<div className="review__company-description">{review.company.description}</div>
 						</div>
 					</div>
+
+					<div className="review__card">
+
 					<div className="review__position">
 						<h2 className="review__position-name">
 							<span>{review.position}</span>&emsp;
 							<span style={{ margin: 0 }} className="review-card__team">
+								<span className="review_terms_title">Department/team: </span>
 								{review.team}
 							</span>
 						</h2>
@@ -81,7 +85,9 @@ const Review = (props: ReviewProps) => {
 							<EnvironmentFilled /> {review.location}
 						</span>
 						&emsp;
-						<span className="review__terms">Employed: {review.terms.join(", ")}</span>
+						<span className="review__terms">
+							<span className="review_terms_title">Employed: </span>
+							{review.terms.join(", ")}</span>
 					</div>
 					<div className="review__ratings">
 						<Stat title="Overall rating" className="review__overall-rating">
@@ -125,6 +131,44 @@ const Review = (props: ReviewProps) => {
 					<div className="review__content">
 						{isMobile ? (
 							<div className="review__short">
+
+							<div className="review__tools">
+								<h4>Tools Used</h4>
+								<div className="review__tools-content">
+									{review.tools.often.length > 0 && (
+										<Question label="Used all the time" className="review__tools-always">
+											{review.tools.often.join(", ")}
+										</Question>
+									)}
+									{review.tools.occasionally.length > 0 && (
+										<Question label="Used occasionally" className="review__tools-occasionally">
+											{review.tools.occasionally.join(", ")}
+										</Question>
+									)}
+									{review.tools.rarely.length > 0 && (
+										<Question label="Used a little" className="review__tools-little">
+											{review.tools.rarely.join(", ")}
+										</Question>
+									)}
+								</div>
+							</div>
+
+							<div>
+								<div className="review__compensation">
+									<h4>Compensation</h4>
+									<Question label="Pay">
+										{review.pay}
+										{/* <PayDisplay {...review.pay} /> */}
+									</Question>
+									<Question label="Housing stipend">
+										{review.housing_stipend ? review.housing_stipend : "None"}
+									</Question>
+									{/* <Question label="Other benefits">
+						{review.benefits ? review.benefits : 'None'}
+					</Question> */}
+								</div>
+
+
 								<div className="review__profile">
 									<h4>Intern Profile</h4>
 									<Question label="Major">{review.major}</Question>
@@ -140,40 +184,8 @@ const Review = (props: ReviewProps) => {
 										<Question label="Other areas of study">{review.other_studies}</Question>
 									)}
 								</div>
-								<div>
-									<div className="review__compensation">
-										<h4>Compensation</h4>
-										<Question label="Pay">
-											{review.pay}
-											{/* <PayDisplay {...review.pay} /> */}
-										</Question>
-										<Question label="Housing stipend">
-											{review.housing_stipend ? review.housing_stipend : "None"}
-										</Question>
-										{/* <Question label="Other benefits">
-              {review.benefits ? review.benefits : 'None'}
-            </Question> */}
-									</div>
-									<div className="review__tools">
-										<h4>Tools Used</h4>
-										<div className="review__tools-content">
-											{review.tools.often.length > 0 && (
-												<Question label="Used all the time" className="review__tools-always">
-													{review.tools.often.join(", ")}
-												</Question>
-											)}
-											{review.tools.occasionally.length > 0 && (
-												<Question label="Used occasionally" className="review__tools-occasionally">
-													{review.tools.occasionally.join(", ")}
-												</Question>
-											)}
-											{review.tools.rarely.length > 0 && (
-												<Question label="Used a little" className="review__tools-little">
-													{review.tools.rarely.join(", ")}
-												</Question>
-											)}
-										</div>
-									</div>
+
+
 									<div className="review__offer">
 										<h4>Offers</h4>
 										<Question label="Offered full time position?">
@@ -275,11 +287,13 @@ const Review = (props: ReviewProps) => {
 
 						<div className="review__long">
 							<div className="review__description">
-								<h3>Job description</h3>
+								<h3>Overview</h3>
+								<p>{review.project_description}</p>
 								<p>{review.description}</p>
+								<p>{review.optional_remarks}</p>
 							</div>
 							<div className="review__recommendation">
-								<h3>Recommendations</h3>
+								{/*<h3>Recommendations</h3>*/}
 								<h4>Would recommend it to people who...</h4>
 								{/* <Question label="Would recommend it to people who..."><p>{review.recommend}</p></Question> */}
 								<p>{review.recommend}</p>
@@ -411,15 +425,10 @@ const Review = (props: ReviewProps) => {
 										<p>{review.interview_advice}</p>
 									</div>
 								)}
-								{review.optional_remarks && (
-									<div className="review__remarks">
-										<h4>Other remarks</h4>
-										<p>{review.optional_remarks}</p>
-									</div>
-								)}
 							</div>
 						</div>
 					</div>
+				</div>
 				</div>
 			) : (
 				<Skeleton active paragraph={{ rows: 10 }} />

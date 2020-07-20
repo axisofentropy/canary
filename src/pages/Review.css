@@ -24,7 +24,7 @@
 	max-height: 70px;
 	width: auto;
 	height: auto;
-	margin: 15px 15px auto 0;
+	margin: 15px 15px auto 10px;
 }
 
 .review__company-name {
@@ -62,6 +62,12 @@
 .review__position-details {
 	display: flex;
 	flex-wrap: wrap;
+	margin-left: -15px;
+}
+
+.review__company-details {
+	margin-top: 15px;
+	margin-left: 10px;
 }
 
 .review__ratings {
@@ -119,14 +125,17 @@
 
 .question__label {
 	/* line-height: 14px; */
-	color: rgba(0, 0, 0, 0.5);
+	color: rgba(0, 0, 0, 1);
 	font-size: 0.9em;
 }
 
 .question__content {
 	/* padding: 0 5px; */
 	margin-bottom: 5px;
+	margin-left: 5px;
+	padding-left: 4px;
 	border-left: 2px solid #ffbd00;
+	color: (0, 0, 0, .9)
 }
 
 .review__content .stat {
@@ -174,6 +183,22 @@
 	/* max-width: 70%; */
 }
 
+.review__card {
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: rgba(0, 0, 0, .12) 0 0 10px !important;
+	background: #fff;
+	margin-top: 25px;
+	padding-top: 10px;
+	padding-left: 15px;
+	padding-right: 10px;
+	padding-bottom: 15px;
+}
+
+.review__internship-type {
+	display: none;
+}
+
 .review h4 {
 	margin-bottom: 2px;
 	color: rgba(0, 0, 0, 0.7);
@@ -197,6 +222,15 @@
 	margin-bottom: 10px;
 }
 
+.review__terms {
+		margin-left: 15px;
+}
+
+.review_terms_title {
+	color: rgba(0, 0, 0, 0.9);
+	font-size: .95rem;
+}
+
 .review__profile {
 	padding: 15px;
 	background: #ededed;
@@ -208,22 +242,22 @@
 .review__compensation {
 	padding: 15px;
 	background: #ededed;
-	border-radius: 5px;	
+	border-radius: 5px;
 	margin-bottom: 5px;
-	
+
 }
 
 .review__tools {
 	padding: 15px;
 	background: #ededed;
-	border-radius: 5px;	
+	border-radius: 5px;
 	margin-bottom: 5px;
 }
 
 .review__offer {
 	padding: 15px;
 	background: #ededed;
-	border-radius: 5px;	
+	border-radius: 5px;
 	margin-bottom: 5px;
 }
 
@@ -237,7 +271,7 @@
   padding: 0 5px;
   border-radius: 5px;
 /* } */
-/* 
+/*
 .multi-select {
   display: inline-grid;
   margin-right: auto;

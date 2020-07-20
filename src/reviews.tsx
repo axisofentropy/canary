@@ -38,6 +38,7 @@ export interface Review {
 	rounds: "1" | "2" | "3" | "4+";
 	formats: ("in_person" | "remote" | "recorded" | "online_test")[];
 	interview_types: ("behavioral" | "technical" | "case" | "past_experience")[];
+	project_description: string;
 }
 
 export interface Company {

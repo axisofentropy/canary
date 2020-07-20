@@ -9,24 +9,25 @@ import { InfoCircleOutlined, BarsOutlined, MenuOutlined } from '@ant-design/icon
 import { CookiesProvider } from 'react-cookie';
 import { Button, Menu, Dropdown, Result, BackTop } from 'antd';
 import SubmitReview from './pages/SubmitReview';
-import Review from './pages/Review'
+import About from './pages/About';
+import Review from './pages/Review';
 // import Headroom from 'react-headroom'
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
 
 import logo from './images/canaryLogo-img.png';
-import uffizziLogo from './images/uffizzi-logo-blue-yellow.png'
+import uffizziLogo from './images/uffizzi-logo-blue-yellow.png';
 // import { database } from './database';
 // import { reviews } from './reviews'
 
 // database.collection('review').where('is_visible', '==', true).get().then(data => {
 //   console.log(data.docs.map(d => d.data()));
-  
+
 // })
 
 // reviews.forEach(review => {
 //   database.collection('review').doc(review.id).set(review).then(() => {
 //     console.log('success');
-    
+
 //   }).catch(err => {
 //     console.log('fail');
 //   })
@@ -56,7 +57,7 @@ const ReviewSuccess: React.SFC<RouteComponentProps> = props => (
     <Result
       status='success'
       title="Review Submitted!"
-      subTitle="Thank you for helping your fellow student!"
+      subTitle="Thank you for helping your fellow student! Your review is now awaiting approval by our moderation team and will be live once it is approved. Please allow up to 24 hours for your Amazon Gift card to be delivered to your email address."
       extra={<Button onClick={() => navigate('/submit')}>Write another review</Button>}
     />
   </div>
@@ -85,9 +86,9 @@ const menu = (
     <Menu.Item>
       <Link to="/submit">✎  Write a review</Link>
     </Menu.Item>
-    {/* <Menu.Item>
-      <Link to="/about"><InfoCircleOutlined /> About</Link>
-    </Menu.Item> */}
+    {/*}<Menu.Item>
+      <Link to="/about"><InfoCircleOutlined />About</Link>
+    </Menu.Item>*/}
   </Menu>
 );
 
@@ -132,7 +133,7 @@ const App = () => {
                     <Menu style={{ height: "100%", marginTop: 'auto' }} mode="horizontal" selectedKeys={[context.location.pathname.replace('/', '')||'reviews']}>
                       <Menu.Item key="reviews"><Link to="/"><BarsOutlined /> Reviews</Link></Menu.Item>
                       <Menu.Item key="submit"><Link to="/submit">✎ Write a review</Link></Menu.Item>
-                      {/* <Menu.Item key="about"><Link to="/about"><InfoCircleOutlined /> About</Link></Menu.Item> */}
+                      {/*<Menu.Item key="about"><Link to="/about"><InfoCircleOutlined /> About</Link></Menu.Item>*/}
                     </Menu>
                 }
               </nav>
@@ -154,6 +155,7 @@ const App = () => {
             <Home path="/"></Home>
             <Review path="/reviews/:reviewID" />
             <SubmitReview path="/submit" />
+            <About path="/about"/>
             <ReviewNotFound path="/reviews/not-found" />
             <ReviewSuccess path="/submit-success" />
             <ReviewError path="/submit-error" />
