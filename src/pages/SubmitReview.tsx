@@ -49,7 +49,7 @@ const marks_prerequisites = {
 
 const marks_timeworking = {
 	0: "0-20% (might as well have done nothing)",
-	1: "20-40% (worked some, but ton of down time)",
+	1: "20-40% worked some, but ton of down time)",
 	2: "40-60% (some days stayed busy, but still good bit of downtime)",
 	3: "60-80% (stayed pretty busy)",
 	4: "80-100% (more or less busy the whole time)"
@@ -141,7 +141,7 @@ const DynamicRule = () => {
 			position: values.position || "",
 			team: values.team || "",
 			internship_type: values.internship_type || "internship",
-			structured_program: values.structured_program || true,
+			structured_program: values.structured_program || "",
 			location: values.location || "",
 			terms: values.terms || [],
 			pay: values.pay || "",
@@ -165,7 +165,7 @@ const DynamicRule = () => {
 			would_accept_offer: values.would_accept_offer || -1,
 			impact: values.impact,
 			prerequisites: values.prerequisites,
-			expectations: values.expectations,
+			expectations: values.expectations || "",
 			expectations_description: values.expectations_description || "",
 			work_time: values.work_time,
 			interview_advice: values.interview_advice || "",
@@ -186,7 +186,7 @@ const DynamicRule = () => {
 		const user = {
 			id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
 			name: values.name,
-			email: values.email,
+			email: values.email || "",
 			review_id: review.id,
 			user_timestamp: { seconds: new Date().getTime() / 1000 },
 		};
@@ -418,7 +418,14 @@ const AboutYou = () => (
 		<Form.Item
 			className="input-horizontal"
 			name="email"
-			label="School email (will not be public)"
+			label= {
+				<span>
+					School email (will not be public)
+					<Tooltip className="input-horizontal-spacer" title="We use this to verify you are actually a student, and to send you stuff like Amazon gift cards (when we have a promotion going)">
+						<QuestionCircleOutlined />
+					</Tooltip>
+				</span>
+			}
 			extra=""
 			rules={[
 				{
@@ -430,9 +437,7 @@ const AboutYou = () => (
 		>
 
 			<Input style={{ maxWidth: "250px" }} placeholder="name@school.edu" className="input-horizontal-spacer"/>
-			<Tooltip className="input-horizontal-spacer" title="We use this to verify you are actually a student, and to send you stuff like Amazon gift cards (when we have a promotion going)">
-				<QuestionCircleOutlined />
-			</Tooltip>
+
 		</Form.Item>
 
 
@@ -574,6 +579,7 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 		>
 			<Input style={{ maxWidth: "250px" }} placeholder="Please input your department/team" className="input-horizontal-spacer" />
 		</Form.Item>
+		{/*
 		<Form.Item
 			className="input-horizontal"
 			name="structured_program"
@@ -596,7 +602,7 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 				<Radio.Button value="yes">Yes</Radio.Button>
 				<Radio.Button value="no">No</Radio.Button>
 			</Radio.Group>
-		</Form.Item>
+		</Form.Item> */}
 
 		<Form.Item
 			className=""
@@ -862,7 +868,7 @@ const InternshipExperience = () => (
 								message: "please slide",
 							},]}>
 
-					<Slider marks={marks_impact} defaultValue={0} tooltipVisible={false} step={5} min={0} max={4}	className="submit_slider"/>
+					<Slider marks={marks_impact} defaultValue={1} tooltipVisible={false} step={5} min={0} max={4}	className="submit_slider"/>
 		</Form.Item>
 
 
@@ -1129,7 +1135,7 @@ const Submit = ({ onSubmit }) => (
     </Form.Item> */}
 		<Form.Item
 			name="feedback"
-			label="Any thoughts or feedback about Canary? What questions should we remove or add?"
+			label="What can we improve on Canary? What questions should we remove or add?"
 		>
 			<Input.TextArea rows={1}></Input.TextArea>
 		</Form.Item>
@@ -1168,7 +1174,7 @@ const Submit = ({ onSubmit }) => (
 		>
 			<Checkbox>
 				By clicking the checkbox, I give permission to Canary to share my anonymized information on its website and with third
-				parties. I have read and agree to Canary's <a href="https://drive.google.com/file/d/1H04VfyYI4EFOhgfS3Twur3gky6k8K9dM/view?usp=sharing">Reservation of Rights</a> and <a href="https://drive.google.com/file/d/10r35P3iHzBMvLncvOcpgc2GjPqNbWunm/view?usp=sharing">Terms of Service</a>. I understand submitted information becomes the property of Canary. (We take privacy and anonymity
+				parties. I have read and agree to Canary's <a href="https://drive.google.com/file/d/1H04VfyYI4EFOhgfS3Twur3gky6k8K9dM/view?usp=sharing" target="_blank">Reservation of Rights</a> and <a href="https://drive.google.com/file/d/10r35P3iHzBMvLncvOcpgc2GjPqNbWunm/view?usp=sharing" target="_blank">Terms of Service</a>. I understand submitted information becomes the property of Canary. (We take privacy and anonymity
 			  seriously - we will NOT share your name or email.)
 			</Checkbox>
 		</Form.Item>

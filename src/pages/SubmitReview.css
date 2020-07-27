@@ -104,12 +104,12 @@
 }
 
 .submit_slider_worktime {
-  margin-bottom: 150px;
+  margin-bottom: 160px;
 }
 
 
 .ant-slider-mark-text, .ant-slider-mark-text-active span {
-  width: 55px !important;
+  width: 60px !important;
   font-size: .8rem;
 }
 
