@@ -17,6 +17,18 @@ interface ReviewCardProps {
   note?: string,
   wordLimit?: number,
   charLimit?: number,
+  overview?: string,
+}
+
+{/*Combine project_description and description for the review card display, but only combine for when project_descrption is not undefined (to handle legacy reviews with no project_description field) */}
+function reviewOverviewCombine(description, project_description) {
+  let overview = "test";
+  if (typeof project_description !== "undefined") {
+    overview = description + project_description
+  } else {
+    overview = description;
+  }
+  return overview
 }
 
 
@@ -53,7 +65,7 @@ const ReviewCard = ({ review, note = "", wordLimit = 35, charLimit=300 }: Review
       <div className="review-card__content">
         <h2 className="review-card__position">{review.position}</h2>
         <span className="review-card__team">{review.team}</span>
-        <div className="review-card__description">{truncateDescription(review.description)}</div>
+        <div className="review-card__description">{truncateDescription(reviewOverviewCombine(review.description, review.project_description))}</div>
         <div className="review-card__footer">
           <Stat title="Pay">
             {review.pay}

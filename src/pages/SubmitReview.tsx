@@ -176,6 +176,9 @@ const DynamicRule = () => {
 			feedback: values.feedback || "",
 			is_visible: false,
 			project_description: values.project_description || "",
+			is_remote: values.is_remote || "",
+			remote_description: values.remote_description || "",
+			feedback_length: values.feedback_length || "",
 
 		};
 		// console.log(review);
@@ -250,8 +253,10 @@ const DynamicRule = () => {
 			layout="vertical"
 			name="dynamic_rule"
 		>
-			<h3>🔥 For a limited time, get a <b>$5 Amazon gift card</b> when you leave a review!</h3>
-			<p>Once your review is approved by our moderation team, a gift card code will be sent to your email adress!</p>
+		  <div className = "featured_card_submit">
+				<h3>🔥 For a limited time, get a <b>$5 Amazon gift card</b> when you leave a review!</h3>
+				<p>Once your review is approved by our moderation team, a gift card code will be sent to your email adress! (limit one per user - hey I mean we're not loaded ya know)</p>
+			</div>
 			<br></br>
 			<Steps direction="vertical">
 				<Steps.Step status="process" title="About you" description={<AboutYou />} />
@@ -280,6 +285,7 @@ const DynamicRule = () => {
 const InterviewProcess = () => (
 	<div className="interview-process">
 		<Form.Item
+			className = "input-horizontal"
 			name="rounds"
 			label="Rounds"
 			rules={[
@@ -289,7 +295,7 @@ const InterviewProcess = () => (
 				},
 			]}
 		>
-			<Radio.Group>
+			<Radio.Group className="input-horizontal-spacer-rounds">
 				<Radio value={"1"}>1</Radio>
 				<Radio value={"2"}>2</Radio>
 				<Radio value={"3"}>3</Radio>
@@ -353,6 +359,7 @@ const InterviewProcess = () => (
 const AboutYou = () => (
 	<div className="about-you">
 		<Form.Item
+			className="input-horizontal"
 			name="name"
 			label="Name (will not be public)"
 			rules={[
@@ -362,7 +369,7 @@ const AboutYou = () => (
 				},
 			]}
 		>
-			<Input style={{ maxWidth: "250px" }} placeholder="Please input your full name" />
+			<Input style={{ maxWidth: "250px" }} placeholder="Please input your full name" className="input-horizontal-spacer"/>
 		</Form.Item>
 
 		{/*<Form.Item
@@ -381,6 +388,7 @@ const AboutYou = () => (
 
 
 		<Form.Item
+		className="input-horizontal"
 		name="school"
 		label="School"
 		rules={[
@@ -391,6 +399,7 @@ const AboutYou = () => (
 		]}
 	>
 		<AutoComplete
+		className="input-horizontal-spacer"
 		options={schools}
 		placeholder="Please input your school"
 		style={{ maxWidth: '320px' }}
@@ -407,9 +416,10 @@ const AboutYou = () => (
 
 
 		<Form.Item
+			className="input-horizontal"
 			name="email"
 			label="School email (will not be public)"
-			extra="This helps us verify you are actually a student and will be used to send your Amazon Gift card code!"
+			extra=""
 			rules={[
 				{
 					required: true,
@@ -418,7 +428,11 @@ const AboutYou = () => (
 				},
 			]}
 		>
-			<Input style={{ maxWidth: "250px" }} placeholder="name@school.edu" />
+
+			<Input style={{ maxWidth: "250px" }} placeholder="name@school.edu" className="input-horizontal-spacer"/>
+			<Tooltip className="input-horizontal-spacer" title="We use this to verify you are actually a student, and to send you stuff like Amazon gift cards (when we have a promotion going)">
+				<QuestionCircleOutlined />
+			</Tooltip>
 		</Form.Item>
 
 
@@ -444,6 +458,7 @@ const AboutYou = () => (
 
 
 			<Form.Item
+		  className="input-horizontal"
 			name="major"
 			label="Major"
 			rules={[
@@ -454,6 +469,7 @@ const AboutYou = () => (
 			]}
 		>
 			<AutoComplete
+			className="input-horizontal-spacer"
 			options={majors}
 			placeholder="Please input your major"
 			style={{ maxWidth: '320px' }}
@@ -482,7 +498,7 @@ const AboutYou = () => (
 					message: "Please select your year",
 				},
 			]}
-			label="Year in school when you applied to job"
+			label="Year in school when you applied to the job"
 		>
 			<YearInput />
 		</Form.Item>
@@ -497,8 +513,9 @@ const AboutYou = () => (
 );
 
 const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
-	<div className="internship-details">
+	<div className="internship-details input-horizontal">
 		<Form.Item
+			className="input-horizontal"
 			name="internship_type"
 			label="Internship or Co-op"
 			rules={[
@@ -508,12 +525,13 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 				},
 			]}
 		>
-			<Radio.Group defaultValue="internship" value="internship">
+			<Radio.Group defaultValue="internship" value="internship" className="input-horizontal-spacer">
 				<Radio.Button value="internship">Internship</Radio.Button>
 				<Radio.Button value="co-op">Co-op</Radio.Button>
 			</Radio.Group>
 		</Form.Item>
 		<Form.Item
+			className="input-horizontal"
 			name="company_name"
 			label="Company name"
 			rules={[
@@ -523,7 +541,7 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 				},
 			]}
 		>
-			<Input style={{ maxWidth: "300px" }} placeholder="Please input the company name" />
+			<Input style={{ maxWidth: "300px" }} placeholder="Please input the company name" className="input-horizontal-spacer" />
 			{/* <AutoComplete
         options={companySuggestions}
         placeholder="Please input the company name"
@@ -531,6 +549,7 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
         filterOption={(inputValue, option) => option ? option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1 : false}/> */}
 		</Form.Item>
 		<Form.Item
+			className="input-horizontal"
 			name="position"
 			label="Position title"
 			rules={[
@@ -540,21 +559,23 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 				},
 			]}
 		>
-			<Input style={{ maxWidth: "250px" }} placeholder="Please input your position title" />
+			<Input style={{ maxWidth: "250px" }} placeholder="Please input your position title" className="input-horizontal-spacer"/>
 		</Form.Item>
 		<Form.Item
+			className="input-horizontal"
 			name="team"
 			label="Department/Team"
 			rules={[
 				{
-					required: true,
+					required: false,
 					message: "Please input your department/team",
 				},
 			]}
 		>
-			<Input style={{ maxWidth: "250px" }} placeholder="Please input your department/team" />
+			<Input style={{ maxWidth: "250px" }} placeholder="Please input your department/team" className="input-horizontal-spacer" />
 		</Form.Item>
 		<Form.Item
+			className="input-horizontal"
 			name="structured_program"
 			label={
 				<span>
@@ -571,12 +592,57 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 				},
 			]}
 		>
-			<Radio.Group>
+			<Radio.Group className="input-horizontal-spacer">
 				<Radio.Button value="yes">Yes</Radio.Button>
 				<Radio.Button value="no">No</Radio.Button>
 			</Radio.Group>
 		</Form.Item>
+
 		<Form.Item
+			className=""
+			name="is_remote"
+			label={
+				<span>
+					Was this internship remote/virtual or was it in person?
+					{/*}<Tooltip title="Structured programs will usually have other interns, scheduled events/trainings, advisor check-ins, etc.">
+						<QuestionCircleOutlined />
+					</Tooltip>*/}
+				</span>
+			}
+			rules={[
+				{
+					required: true,
+					message: "Please specify if this is a remote internship/co-op program",
+				},
+			]}
+		>
+			<Radio.Group className="">
+				<Radio.Button value="In-person">In-person</Radio.Button>
+				<Radio.Button value="Remote">Remote</Radio.Button>
+				<Radio.Button value="Some of both">Some of both</Radio.Button>
+			</Radio.Group>
+		</Form.Item>
+
+		<Form.Item
+			className=""
+			name="remote_description"
+			label="If remote, how did it affect the experience? Do you think they'll continue remote after Covid?"
+			rules={[
+				{
+					required: false,
+					message: "PLease describe how the company did",
+				},
+			]}
+		>
+			<Input style={{ maxWidth: "250px" }} placeholder="How was it being virtual?" className=""/>
+		</Form.Item>
+
+
+
+
+
+		<Form.Item
+			className="input-horizontal"
 			name="terms"
 			label="Term(s) employed"
 			rules={[
@@ -591,11 +657,13 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 				placeholder="Please select the terms you were employed"
 				style={{ width: "100%", maxWidth: "340px" }}
 				tokenSeparators={[","]}
+				className="input-horizontal-spacer"
 			>
 				{terms}
 			</Select>
 		</Form.Item>
 		<Form.Item
+			className="input-horizontal"
 			name="location"
 			label="Location (city/state/region)"
 			rules={[
@@ -610,9 +678,11 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 			options={locations}
 			placeholder="Please input your internship's location"
 			style={{ maxWidth: '340px' }}
-			filterOption={(inputValue, option) => option ? option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1 : false}/>
+			filterOption={(inputValue, option) => option ? option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1 : false}
+			className="input-horizontal-spacer"/>
 		</Form.Item>
 		<Form.Item
+			className="input-horizontal"
 			name="pay"
 			label="Pay"
 			extra="Hourly, stipend, etc."
@@ -623,12 +693,13 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 				},
 			]}
 		>
-			<Input style={{ maxWidth: "250px" }} placeholder="Please input your pay" />
+			<Input style={{ maxWidth: "250px" }} placeholder="Please input your pay" className="input-horizontal-spacer"/>
 		</Form.Item>
-		<Form.Item label="Housing stipend">
+		<Form.Item label="Housing stipend" className="input-horizontal">
 			<Radio.Group
 				defaultValue="none"
 				onChange={(e) => setHasHousingStipend(e.target.value === "yes")}
+				className="input-horizontal-spacer"
 			>
 				<Radio.Button value="none">None</Radio.Button>
 				<Radio.Button value="yes">Yes</Radio.Button>
@@ -650,7 +721,7 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 				},
 			]}
 		>
-			<Radio.Group>
+			<Radio.Group className="input-horizontal-spacer">
 				<Radio style={verticalStyle} value={0}>
 					Yes
 				</Radio>
@@ -701,6 +772,7 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 
 const InternshipExperience = () => (
 	<div className="internship-experience">
+		{/*
 		<Form.Item
 			name="expectations"
 			label="How did your experience compare to your expectations?"
@@ -726,6 +798,7 @@ const InternshipExperience = () => (
 				</Radio>
 			</Radio.Group>
 		</Form.Item>
+		*/}
 
 
 		{/* How was it different text box input */}
@@ -868,6 +941,7 @@ const InternshipExperience = () => (
 
 
 		<Form.Item
+			className=""
 			name="tools_often"
 			label="Software/Tools you used most often"
 			rules={[
@@ -878,6 +952,7 @@ const InternshipExperience = () => (
 			]}
 		>
 			<Select
+				className=""
 				mode="tags"
 				placeholder="Please input the tools(s) you used often"
 				dropdownStyle={{ display: "none" }}
@@ -885,8 +960,9 @@ const InternshipExperience = () => (
 				tokenSeparators={[","]}
 			></Select>
 		</Form.Item>
-		<Form.Item name="tools_occasionally" label="Software/Tools you used occasionally">
+		<Form.Item name="tools_occasionally" label="Software/Tools you used occasionally" className="">
 			<Select
+				className=""
 				mode="tags"
 				dropdownStyle={{ display: "none" }}
 				placeholder="Please input the tools(s) you used occasionally"
@@ -1044,7 +1120,7 @@ const Submit = ({ onSubmit }) => (
       name="platform_use"
       label="How likely would you be to use a platform that lets you read detailed student reviews of internship/co-op experiences?">
       <Radio.Group>
-        <Radio style={verticalStyle} value="4">Definitely</Radio>
+        <Radio fstructutrestyle={verticalStyle} value="4">Definitely</Radio>
         <Radio style={verticalStyle} value="3">Very likely</Radio>
         <Radio style={verticalStyle} value="2">Probably</Radio>
         <Radio style={verticalStyle} value="1">Not likely</Radio>
@@ -1053,10 +1129,37 @@ const Submit = ({ onSubmit }) => (
     </Form.Item> */}
 		<Form.Item
 			name="feedback"
-			label="Any thoughts or feedback about Canary? What would you like from this type of platform?"
+			label="Any thoughts or feedback about Canary? What questions should we remove or add?"
 		>
 			<Input.TextArea rows={1}></Input.TextArea>
 		</Form.Item>
+
+		<Form.Item
+			name="feedback_length"
+			label={
+				<span>
+					How was the length of this form?
+					{/*}<Tooltip title="Structured programs will usually have other interns, scheduled events/trainings, advisor check-ins, etc.">
+						<QuestionCircleOutlined />
+					</Tooltip>*/}
+				</span>
+			}
+			rules={[
+				{
+					required: false,
+					message: "",
+				},
+			]}
+		>
+			<Radio.Group>
+				<Radio.Button value="Too short">Too short</Radio.Button>
+				<Radio.Button value="Just right">Just Right</Radio.Button>
+				<Radio.Button value="Too long">Too long</Radio.Button>
+			</Radio.Group>
+		</Form.Item>
+
+
+
 		<Form.Item
 			name="permission"
 			label="Conditions"
@@ -1069,7 +1172,6 @@ const Submit = ({ onSubmit }) => (
 			  seriously - we will NOT share your name or email.)
 			</Checkbox>
 		</Form.Item>
-		<h3>Your $5 Amazon gift card code will be sent to your email once your review is approved by our moderation team! (You can expect it within 24 hours)</h3>
 		<Form.Item>
 			<Button type="primary" htmlType="submit">
 				Submit

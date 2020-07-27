@@ -101,11 +101,12 @@ const DropdownMenu = () => {
             border: 'none',
             padding: 0,
           }}
+        
         >
           <MenuOutlined
             style={{
               fontSize: 20,
-              verticalAlign: 'top',
+              verticalAlign: 'left',
             }}
           />
         </Button>
