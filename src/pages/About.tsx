@@ -22,12 +22,25 @@ import { database } from "../database";
 
 
 
-
-const { Option } = Select;
-
 const About = (props: RouteComponentProps) => {
 	return (
 		<div className="">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

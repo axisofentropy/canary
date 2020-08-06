@@ -86,8 +86,8 @@ const menu = (
     <Menu.Item>
       <Link to="/submit">✎  Write a review</Link>
     </Menu.Item>
-    {/*}<Menu.Item>
-      <Link to="/about"><InfoCircleOutlined />About</Link>
+    {/*<Menu.Item>
+      <Link to="/about"><InfoCircleOutlined />About page</Link>
     </Menu.Item>*/}
   </Menu>
 );

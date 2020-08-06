@@ -23,6 +23,15 @@ const Question: React.SFC<{ label: string; className?: string }> = ({
 	</div>
 );
 
+function NA_maker (content) {
+	if (content == ""){
+		content = "n.a.";
+	}
+	return content
+}
+
+
+
 const radioStyle = {
 	lineHeight: "30px",
 };
@@ -198,14 +207,14 @@ const Review = (props: ReviewProps) => {
 												][review.offer]
 											}
 										</Question>
-										{review.offer !== 0 && (
+										{review.offer !== 0 && review.offer !== 1 && (
 											<Question label="Would accept full time offer?">
 												{
 													[
 														"Yes, definitely",
 														"Maybe, I probably would",
+														"No, definitely not", /* Used to be "Not offered" for some reason. So Reviews before 8-1-2020 that have a would_accept_offer value of 2 might have been clicking "not offered" instead of "No, defintely not"*/
 														"Maybe, but probably not",
-														"No, definitely not",
 													][review.would_accept_offer]
 												}
 											</Question>
@@ -296,15 +305,18 @@ const Review = (props: ReviewProps) => {
 								{/*<h3>Recommendations</h3>*/}
 								<h4>Would recommend it to people who...</h4>
 								{/* <Question label="Would recommend it to people who..."><p>{review.recommend}</p></Question> */}
-								<p>{review.recommend}</p>
+								<p>{NA_maker(review.recommend)}</p>
 								<h4>Would NOT recommend it to people who...</h4>
 								{/* <Question label="Would NOT recommend it to people who..."><p>{review.not_recommend}</p></Question> */}
-								<p>{review.not_recommend}</p>
+								<p>{NA_maker(review.not_recommend)}</p>
 							</div>
+
+
 							<div className="review__work">
 								<h3>Work</h3>
-								<h4>Did the job meet your expectations?</h4>
+								{/*<h4>Did the job meet your expectations?</h4>*/}
 								{/* <Question label="Did the job meet your expectations?"> */}
+								{/*
 								<Radio.Group value={review.expectations}>
 									<Radio style={radioStyle} value={0}>
 										It was what I expected
@@ -318,16 +330,20 @@ const Review = (props: ReviewProps) => {
 									<Radio style={radioStyle} value={3}>
 										Not better or worse, just different
 									</Radio>
-								</Radio.Group>
+								</Radio.Group> */}
 								{/* </Question> */}
 								{/* {review.expectations !== 1 && <Question label="What was different?">{review.expectations_description}</Question>} */}
+								{/*
 								{review.expectations !== 0 && (
 									<div>
 										<h4>How was it different?</h4>
 										<p>{review.expectations_description}</p>
 									</div>
 								)}
+								*/}
 								{/* <Question label="Impact of work"> */}
+
+
 
 								<h4>Impact of work</h4>
 								<Radio.Group value={review.impact}>
@@ -343,7 +359,7 @@ const Review = (props: ReviewProps) => {
 									<Radio style={radioStyle} value={3}>
 										Impactful
 									</Radio>
-									<Radio style={radioStyle} value={5}>
+									<Radio style={radioStyle} value={4}>
 										Very impactful
 									</Radio>
 								</Radio.Group>
@@ -360,7 +376,7 @@ const Review = (props: ReviewProps) => {
 									<Radio style={radioStyle} value={2}>
 										Intermediate - need to be pretty familiar with this area
 									</Radio>
-									<Radio style={radioStyle} value={4}>
+									<Radio style={radioStyle} value={3}>
 										Expert - need to have advanced knowledge / multiple prior experiences in this
 										area
 									</Radio>
@@ -422,7 +438,7 @@ const Review = (props: ReviewProps) => {
 								{review.interview_advice && (
 									<div className="review__advice">
 										<h4>Advice on the application/interview process</h4>
-										<p>{review.interview_advice}</p>
+										<p>{NA_maker(review.interview_advice)}</p>
 									</div>
 								)}
 							</div>

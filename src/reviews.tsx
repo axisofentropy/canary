@@ -39,6 +39,7 @@ export interface Review {
 	formats: ("in_person" | "remote" | "recorded" | "online_test")[];
 	interview_types: ("behavioral" | "technical" | "case" | "past_experience")[];
 	project_description: string;
+	is_remote: string;
 }
 
 export interface Company {

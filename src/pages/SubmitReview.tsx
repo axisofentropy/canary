@@ -761,7 +761,7 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 								Maybe, I probably would
 							</Radio>
 							<Radio style={verticalStyle} value={2}>
-								Not offered
+								No, definitely not
 							</Radio>
 							<Radio style={verticalStyle} value={3}>
 								Maybe, but probably not

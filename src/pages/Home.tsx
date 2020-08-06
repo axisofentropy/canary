@@ -232,7 +232,7 @@ const Home = (props: HomeProps) => {
 							onSearch={handleSearch}
 						/>
 					</Form.Item>
-					{/*<Button
+					<Button
 						type="primary"
 						className="filter-toggle"
 						style={{
@@ -245,28 +245,31 @@ const Home = (props: HomeProps) => {
 						onClick={() => setShowFilter(true)}
 					>
 						<FilterOutlined />
-					</Button>*/}
+					</Button>
 				</div>
 				<div className="search-content">
 					<Filter onClose={() => setShowFilter(false)} visible={showFilter} />
 					<div className="reviews-container">
+
+					<Pagination
+						// showSizeChanger
+						current={page}
+						total={reviews?.length}
+						hideOnSinglePage
+						onChange={(page, pageSize) => setPage(page)}
+						// showTotal={total => `Total ${total} items`}
+						pageSize={reviewsPerPage}
+						onShowSizeChange={(cur, pageSize) => setReviewsPerPage(pageSize)}
+						className = "pagination-element"
+					/>
+
 						<div className="reviews-header">
-							<Pagination
-								// showSizeChanger
-								current={page}
-								total={reviews?.length}
-								hideOnSinglePage
-								onChange={(page, pageSize) => setPage(page)}
-								// showTotal={total => `Total ${total} items`}
-								pageSize={reviewsPerPage}
-								onShowSizeChange={(cur, pageSize) => setReviewsPerPage(pageSize)}
-							/>
 							<div className="sort-input">
 								<Form.Item name={"sort"} noStyle>
 									<SortInput />
 								</Form.Item>
 								<Form.Item name={"key"} noStyle>
-									<Select style={{ width: 140 }} bordered={false}>
+									<Select style={{ width: 140 }} bordered={true}>
 										<Select.Option value="relevance">Relevance</Select.Option>
 										<Select.Option value="date">Date</Select.Option>
 										<Select.Option value="rating-overall">Overall Rating</Select.Option>
