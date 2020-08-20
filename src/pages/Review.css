@@ -266,6 +266,24 @@
 	padding: 0 5px;
 }
 
+.remote-tag {
+  color: gray ;
+  background: ;
+  border: 1px solid #ffbd00;
+  border-radius: 4px;
+  padding: 2px 6px 2px 6px;
+  height: 28px;
+  font-size: 1em;
+	display: inline-block;
+	margin-top: 10px;
+}
+
+.remote-tag p {
+	border-left: 0px !important;
+	padding: 0;
+	margin: 0;
+}
+
 /* .ant-radio-wrapper-checked {
   background: #1a82f822;
   padding: 0 5px;

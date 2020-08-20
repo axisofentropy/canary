@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { RouteComponentProps, navigate, useLocation } from "@reach/router";
 import "./Home.css";
 
-import { Button, Checkbox, Input, Pagination, Spin, Result, Form, Select } from "antd";
+import { Button, Checkbox, Input, Pagination, Spin, Result, Form, Select, AutoComplete} from "antd";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { FilterOutlined, CloseOutlined, ArrowDownOutlined } from "@ant-design/icons";
 
@@ -15,6 +15,8 @@ import classNames from "classnames";
 import Fuse from "fuse.js";
 import flow from "lodash/flow";
 
+import {schools, locations, majors} from "./SubmitAutocomplete.js";
+
 // let test_rev = test_data[1]
 // database.collection('review').doc(test_rev.id).set(test_rev)
 
@@ -23,6 +25,7 @@ const keyMap: { [key: string]: string } = {
 	Company: "company.name",
 	Description: "description",
 };
+
 
 const sortFunctions = {
 	date: (a, b) => b.timestamp.seconds - a.timestamp.seconds,
@@ -198,7 +201,6 @@ const Home = (props: HomeProps) => {
 
 			</div>
 
-
 			 <div className="card_amazon shadow-sm">
 				  <h5 className="card_amazon_header">🔥 Featured</h5>
 				  <div className="card_amazon_body">
@@ -209,7 +211,6 @@ const Home = (props: HomeProps) => {
 					   </Button>
 				   </div>
 			</div>
-
 
 			<div
 				className={classNames("drawer-shade", { visible: showFilter })}
@@ -377,9 +378,11 @@ const Filter = ({ onClose, visible }) => {
 					mode="tags"
 					placeholder="Majors"
 					optionFilterProp="children"
-					// filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-					showSearch
-				></Select>
+					// filterOption={(input, majors) => majors.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+					showSearch>
+
+				</Select>
+
 			</Form.Item>
 			<Form.Item name="school" label="Schools">
 				<Select

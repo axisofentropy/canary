@@ -57,7 +57,7 @@ const ReviewSuccess: React.SFC<RouteComponentProps> = props => (
     <Result
       status='success'
       title="Review Submitted!"
-      subTitle="Thank you for helping your fellow student! Your review is now awaiting approval by our moderation team and will be live once it is approved. Please allow up to 24 hours for your Amazon Gift card to be delivered to your email address."
+      subTitle="Thank you for helping your fellow student! Your review is now awaiting approval by our moderation team and will be live once it is approved. Please allow at least 24-48 hours for your Amazon Gift card to be delivered to your email address."
       extra={<Button onClick={() => navigate('/submit')}>Write another review</Button>}
     />
   </div>
@@ -86,8 +86,12 @@ const menu = (
     <Menu.Item>
       <Link to="/submit">✎  Write a review</Link>
     </Menu.Item>
+
     {/*<Menu.Item>
       <Link to="/about"><InfoCircleOutlined />About page</Link>
+    </Menu.Item>
+    <Menu.Item>
+      <Link to="/login"><InfoCircleOutlined />Login</Link>
     </Menu.Item>*/}
   </Menu>
 );
@@ -134,7 +138,8 @@ const App = () => {
                     <Menu style={{ height: "100%", marginTop: 'auto' }} mode="horizontal" selectedKeys={[context.location.pathname.replace('/', '')||'reviews']}>
                       <Menu.Item key="reviews"><Link to="/"><BarsOutlined /> Reviews</Link></Menu.Item>
                       <Menu.Item key="submit"><Link to="/submit">✎ Write a review</Link></Menu.Item>
-                      {/*<Menu.Item key="about"><Link to="/about"><InfoCircleOutlined /> About</Link></Menu.Item>*/}
+                      {/*<Menu.Item key="about"><Link to="/about"><InfoCircleOutlined /> About</Link></Menu.Item>
+                      <Menu.Item key="login"><Link to="/login"><InfoCircleOutlined /> Login</Link></Menu.Item>*/}
                     </Menu>
                 }
               </nav>
@@ -164,7 +169,13 @@ const App = () => {
         </div>
         <footer>
           <div className="canary-details">
-            <div>Canary is a Georgia Tech Startup</div>
+            <div>
+              <p>
+                <span>Canary is a Georgia Tech Startup</span>
+                <br></br>
+                <span>Copyright © 2020 Canary Enterprises LLC. All rights reserved.</span>
+              </p>
+            </div>
             <a href="mailto:feedback@canarystudent.com">feedback@canarystudent.com</a>
           </div>
           <div className="host">

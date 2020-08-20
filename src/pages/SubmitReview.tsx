@@ -868,7 +868,7 @@ const InternshipExperience = () => (
 								message: "please slide",
 							},]}>
 
-					<Slider marks={marks_impact} defaultValue={1} tooltipVisible={false} step={5} min={0} max={4}	className="submit_slider"/>
+					<Slider marks={marks_impact} defaultValue={0} tooltipVisible={false} step={5} min={0} max={4}	className="submit_slider"/>
 		</Form.Item>
 
 
@@ -1057,7 +1057,7 @@ const InternshipExperience = () => (
 		</Form.Item>
 		<Form.Item
 			name="project_description"
-			label="Briefly describe your main project(s)."
+			label= {<span>Describe your main project(s). Please explain what you <b>actually</b> did - don't overhype it ;)</span>}
 			rules={[
 				{
 					required: true,

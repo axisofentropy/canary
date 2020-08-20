@@ -32,6 +32,20 @@ function NA_maker (content) {
 
 
 
+function is_remote_packager (content) {
+	if (content == "undefined"){
+		content = "n.a.";
+	} else if (content == "Some of both") {
+    content = "Remote + In-person";
+  } else if (content == null) {
+    content = "In-person";
+  }
+	return content
+}
+
+
+
+
 const radioStyle = {
 	lineHeight: "30px",
 };
@@ -98,6 +112,12 @@ const Review = (props: ReviewProps) => {
 							<span className="review_terms_title">Employed: </span>
 							{review.terms.join(", ")}</span>
 					</div>
+
+					<div className = "remote-tag">
+						<p>{is_remote_packager(review.is_remote)}</p>
+					</div>
+
+
 					<div className="review__ratings">
 						<Stat title="Overall rating" className="review__overall-rating">
 							<div style={{ position: "relative", width: "90px", height: "90px" }}>
@@ -200,7 +220,7 @@ const Review = (props: ReviewProps) => {
 										<Question label="Offered full time position?">
 											{
 												[
-													"Yes",
+													"Yes, accepted",
 													"Offered, but declined",
 													"Not offered",
 													"Not applicable (e.g. too early)",
