@@ -126,7 +126,7 @@
 
 @media (max-width: 575px) {
   .remote-tag {
-    display: none;
+    display: none !important;
   }
   .remote-tag-mobile {
     display: inline-block;
