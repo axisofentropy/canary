@@ -40,6 +40,8 @@ export interface Review {
 	interview_types: ("behavioral" | "technical" | "case" | "past_experience")[];
 	project_description: string;
 	is_remote: string;
+	remote_description: string;
+	feedback: string;
 }
 
 export interface Company {

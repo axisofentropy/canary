@@ -201,6 +201,8 @@ const Home = (props: HomeProps) => {
 
 			</div>
 
+
+{/*
 			 <div className="card_amazon shadow-sm">
 				  <h5 className="card_amazon_header">🔥 Featured</h5>
 				  <div className="card_amazon_body">
@@ -211,6 +213,7 @@ const Home = (props: HomeProps) => {
 					   </Button>
 				   </div>
 			</div>
+			*/}
 
 			<div
 				className={classNames("drawer-shade", { visible: showFilter })}

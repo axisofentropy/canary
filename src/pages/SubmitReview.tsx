@@ -253,10 +253,13 @@ const DynamicRule = () => {
 			layout="vertical"
 			name="dynamic_rule"
 		>
+
+		{/*
 		  <div className = "featured_card_submit">
 				<h3>🔥 For a limited time, get a <b>$5 Amazon gift card</b> when you leave a review!</h3>
 				<p>Once your review is approved by our moderation team, a gift card code will be sent to your email adress! (limit one per user - hey I mean we're not loaded ya know)</p>
 			</div>
+			*/}
 			<br></br>
 			<Steps direction="vertical">
 				<Steps.Step status="process" title="About you" description={<AboutYou />} />
@@ -636,7 +639,7 @@ const InternshipDetails = ({ hasHousingStipend, setHasHousingStipend }) => (
 			rules={[
 				{
 					required: false,
-					message: "PLease describe how the company did",
+					message: "Please describe how the company did being remote",
 				},
 			]}
 		>
@@ -865,7 +868,7 @@ const InternshipExperience = () => (
 
 		<Form.Item name="impact"	label="Impact of your work"	extra="" rules={[
 							{	required: true,
-								message: "please slide",
+								message: "Please select a value (if you choose the lowest value, slide the slider first then place on first option)",
 							},]}>
 
 					<Slider marks={marks_impact} defaultValue={0} tooltipVisible={false} step={5} min={0} max={4}	className="submit_slider"/>
@@ -901,7 +904,7 @@ const InternshipExperience = () => (
 
 		<Form.Item name="prerequisites"	label="How much knowledge or experience was needed going in?"	extra="" rules={[
 							{	required: true,
-								message: "Please selet an option",
+								message: "Please select a value (if you choose the lowest value, slide the slider first then place on first option)",
 							},]}>
 
 					<Slider marks={marks_prerequisites} defaultValue={0} tooltipVisible={false} step={4} min={0} max={3}	className="submit_slider submit_slider_prerequisites"/>
@@ -939,7 +942,7 @@ const InternshipExperience = () => (
 
 		<Form.Item name="work_time"	label="How much of your time were you actively working? (versus waiting for work)"	extra="" rules={[
 							{	required: true,
-								message: "Please selet an option",
+								message: "Please select a value (if you choose the lowest value, slide the slider first then place on first option)",
 							},]}>
 
 					<Slider marks={marks_timeworking} defaultValue={0} tooltipVisible={false} step={5} min={0} max={4}	className="submit_slider submit_slider_worktime"/>

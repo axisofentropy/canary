@@ -57,7 +57,7 @@ const ReviewSuccess: React.SFC<RouteComponentProps> = props => (
     <Result
       status='success'
       title="Review Submitted!"
-      subTitle="Thank you for helping your fellow student! Your review is now awaiting approval by our moderation team and will be live once it is approved. Please allow at least 24-48 hours for your Amazon Gift card to be delivered to your email address."
+      subTitle="Thank you for helping your fellow student! Your review is now awaiting approval by our moderation team and will be live once it is approved."
       extra={<Button onClick={() => navigate('/submit')}>Write another review</Button>}
     />
   </div>
