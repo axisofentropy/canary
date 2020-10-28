@@ -254,12 +254,12 @@ const DynamicRule = () => {
 			name="dynamic_rule"
 		>
 
-		{/*
+
 		  <div className = "featured_card_submit">
-				<h3>🔥 For a limited time, get a <b>$5 Amazon gift card</b> when you leave a review!</h3>
-				<p>Once your review is approved by our moderation team, a gift card code will be sent to your email adress! (limit one per user - hey I mean we're not loaded ya know)</p>
+				<h3>🔥 For a limited time, get entered for a <b>$50 Amazon gift card</b> when you leave a review!</h3>
+				<p>Once your review is approved by our moderation team, you'll be entered. 1 out of every 50 students will get a card. Yeah, I mean they're not the best odds but for sure could be worse right??</p>
 			</div>
-			*/}
+
 			<br></br>
 			<Steps direction="vertical">
 				<Steps.Step status="process" title="About you" description={<AboutYou />} />

@@ -186,8 +186,8 @@ const Home = (props: HomeProps) => {
 			<div className="jumbotron">
 				<div className="jumbotron__content block">
 					<h1>
-						Internship reviews for students,<br/>
-						by students
+						Internship reviews by students,<br/>
+						for students
 					</h1>
 					<div className="jumbotron__review">
 						Learn what internships are really like, before you apply{/* &ensp;{" "}
@@ -202,18 +202,19 @@ const Home = (props: HomeProps) => {
 			</div>
 
 
-{/*
+
 			 <div className="card_amazon shadow-sm">
 				  <h5 className="card_amazon_header">🔥 Featured</h5>
 				  <div className="card_amazon_body">
-					   <h5 className="card_amazon_title">Leave a review and get an Amazon gift card!</h5>
-					   <p className="card_amazon_text">We know some Amazon bucks go a long way (we're students too, remember 😉). So for a limited time, you'll recieve a <b>$5 Amazon gift card</b> if you leave a review!</p>
+					   <h5 className="card_amazon_title">Leave a review for a chance to get an <b>Amazon gift card!</b></h5>
+					   <p className="card_amazon_text">We know some Amazon bucks go a long way (we're students too, remember 😉). So for a limited time, you'll be entered for a chance to win a <b>$50 Amazon gift card</b> if you leave a review!
+						 </p>
 					   <Button type="primary" onClick={() => navigate("/submit")}>
 							✎ Write a Review
 					   </Button>
 				   </div>
 			</div>
-			*/}
+
 
 			<div
 				className={classNames("drawer-shade", { visible: showFilter })}

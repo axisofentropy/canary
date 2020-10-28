@@ -72,8 +72,11 @@ const Review = (props: ReviewProps) => {
 	}, [props.reviewID]);
 	// const review = reviews.find(review => review.id === props.reviewID)
 
+
+
+
 	return (
-		<div className="review-container">
+		<div id="myID" className="review-container">
 			{review ? (
 				<div className="review">
 					<div className="review__company">
@@ -421,6 +424,18 @@ const Review = (props: ReviewProps) => {
 										80-100% (I was more or less busy the whole time)
 									</Radio>
 								</Radio.Group>
+
+
+
+								{review.remote_description && (
+									<div className="review__remotedescription">
+										<h4>How did the company do with the internship being remote?</h4>
+										<p>{review.remote_description}</p>
+									</div>
+								)}
+
+
+
 								{(review.rounds || review.interview_types || review.formats) && (
 									<div>
 										<h3>Interview Details</h3>

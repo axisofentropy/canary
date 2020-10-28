@@ -69,6 +69,7 @@
 
 .jumbotron__review {
   /* text-align: right; */
+  font-size: 1.4em ;
   position: relative;
   top: 100%;
   right: 0;
