@@ -1,7 +1,7 @@
 .review-card {
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: rgba(0, 0, 0, 0.05) 0 0 20px;
+  box-shadow: rgba(0, 0, 0, .12) 0 0 10px !important;
   background: #fff;
 }
 
@@ -27,7 +27,7 @@
   right: 3px;
   font-size: 13px;
   font-weight: 400;
-  
+
 }
 
 .divisor {
@@ -40,14 +40,20 @@
 
 .review-card__position {
   line-height: 18px;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
 
 .review-card__team {
   color: #3339;
-  font-size: 18px;
-  margin-left: 10px;
+  font-size: 14px;
+  margin-left: 0;
   font-weight: normal;
+}
+
+.review-card__description {
+
+  margin-top: 5px;
+
 }
 
 .review-card__content {
@@ -83,6 +89,17 @@
   flex: 1;
   align-self: center;
   white-space: nowrap;
+  margin-top: 5px;
+}
+
+.review-card__view-text {
+  color: #209ae6 ;
+  background: ;
+  border: 1px solid #209ae6;
+  border-radius: 12px;
+  padding: 2px 6px 2px 6px;
+  box-shadow: rgba(0, 0, 0, .12) 0 1px 2px !important;
+
 }
 
 .review-card__meta {
@@ -91,4 +108,35 @@
   display: grid;
   grid-template-rows: 1fr 1fr;
   padding-right: 10px;
+}
+
+.remote-tag {
+  color: gray ;
+  background: ;
+  border: 1px solid #ffbd00;
+  border-radius: 4px;
+  padding: 2px 6px 2px 6px;
+  height: 28px;
+  font-size: 1em;
+}
+
+.remote-tag-mobile {
+  display: none;
+}
+
+@media (max-width: 575px) {
+  .remote-tag {
+    display: none !important;
+  }
+  .remote-tag-mobile {
+    display: inline-block;
+    color: gray ;
+    border: 1px solid #ffbd00;
+    border-radius: 2px;
+    padding: 0px 6px 2px 6px;
+    height: 25px;
+    font-size: 1em;
+    margin-top: 10px;
+    margin-left: 7px;
+  }
 }
